@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Gourmet Guide</string>
     <string name="app_icon">App Icon</string>
+    <string name="log_in"><u>Log In</u></string>
+    <string name="slogan">Guiding You to Gourmet Delights</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_up_with_email">SIGN UP WITH EMAIL</string>
+    <string name="facebook_login">facebook_login</string>
+    <string name="google_login">google_login</string>
+    <string name="email_icon">EMail_icon</string>
 </resources>

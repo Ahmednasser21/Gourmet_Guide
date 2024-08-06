@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/untitled" />
+        app:srcCompat="@drawable/app_icon" />
 
     <TextView
         android:id="@+id/textView"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:gravity="center"
-        android:text="Guiding You to  \nGourmet Delights"
+        android:text="@string/slogan"
         android:textColor="@color/primary_color"
         android:textSize="34sp"
         android:textStyle="bold|italic"
