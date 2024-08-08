@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "101349758916",
+    "project_id": "gurmet-guide",
+    "storage_bucket": "gurmet-guide.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101349758916:android:88ee790439bfe8c7523691",
+        "android_client_info": {
+          "package_name": "com.ahmed.gourmetguide.iti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-WrtFzG8hTmAyv-nlwD5g0bbULIpAgiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

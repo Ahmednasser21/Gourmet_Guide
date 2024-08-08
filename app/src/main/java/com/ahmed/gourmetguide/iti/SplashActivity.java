@@ -3,7 +3,8 @@ package com.ahmed.gourmetguide.iti;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.splashscreen.SplashScreen;
+
+import com.ahmed.gourmetguide.iti.signup_view.SignUpActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -14,8 +15,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         new android.os.Handler().postDelayed(() -> {
-            startActivity(new Intent(SplashActivity.this, SignIn.class));
+            startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
             finish();
-        }, 3000); // Delay for 3 seconds
+        }, 4000); // Delay for 3 seconds
     }
 }

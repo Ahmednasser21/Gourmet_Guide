@@ -1,22 +1,42 @@
 [versions]
 agp = "8.5.1"
+coreSplashscreen = "1.0.1"
+firebaseBom = "33.1.2"
+googleServices = "4.4.2"
+googleServicesVersion = "4.3.10"
+gradle = "7.0.4"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+lottieVersion = "3.4.0"
 material = "1.12.0"
 activity = "1.9.1"
 constraintlayout = "2.1.4"
+navigationFragment = "2.7.7"
+googleGmsGoogleServices = "4.4.2"
+firebaseAuth = "23.0.0"
 
 [libraries]
+core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+google-services-v4310 = { module = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottieVersion" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+navigation-dynamic-features-fragment = { module = "androidx.navigation:navigation-dynamic-features-fragment", version.ref = "navigationFragment" }
+navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigationFragment" }
+navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigationFragment" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 

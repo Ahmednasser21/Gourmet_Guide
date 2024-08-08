@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/sign_in_background"
-    tools:context=".SignIn">
+    android:background="@drawable/sign_up_background"
+    tools:context=".signup_view.SignUpActivity">
 
     <TextView
         android:id="@+id/textView3"
@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -67,7 +67,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline"
-        app:srcCompat="@drawable/sign_in_icon" />
+        app:srcCompat="@drawable/sign_up_icon" />
 
     <TextView
         android:id="@+id/tv_signup_email"
@@ -79,7 +79,7 @@
         android:background="@drawable/white_curved_background"
         android:gravity="center"
         android:text="@string/sign_up_with_email"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_login"
         app:layout_constraintCircleRadius="20dp"
@@ -159,7 +159,7 @@
         android:layout_marginBottom="12dp"
         android:background="@drawable/blue_curved_background"
         android:contentDescription="@string/facebook_login"
-        android:src="@drawable/facebook"
+        android:src="@drawable/facebook_f"
         app:layout_constraintBottom_toTopOf="@+id/tv_signup_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

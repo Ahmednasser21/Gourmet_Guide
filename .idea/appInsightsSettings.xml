@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.ahmed.gourmetguide.iti" />
+                  <option name="mobileSdkAppId" value="1:101349758916:android:88ee790439bfe8c7523691" />
+                  <option name="projectId" value="gurmet-guide" />
+                  <option name="projectNumber" value="101349758916" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

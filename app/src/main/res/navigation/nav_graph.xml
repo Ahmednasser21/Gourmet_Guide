@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signUpFragment">
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.ahmed.gourmetguide.iti.signup_view.SignUpFragment"
+        android:label="Sign Up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpWithEmail"
+            app:destination="@id/signUpWithEmail" />
+        <action
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpWithEmail"
+        android:name="com.ahmed.gourmetguide.iti.signup_view.SignUpWithEmail"
+        android:label="E-Mail SignUp"
+        tools:layout="@layout/fragment_sign_up_with_email" >
+        <action
+            android:id="@+id/action_signUpWithEmail_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.ahmed.gourmetguide.iti.signup_view.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+</navigation>
