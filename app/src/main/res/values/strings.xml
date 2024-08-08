@@ -21,4 +21,9 @@
     <string name="password_warning">Password should not be less than 6 characters</string>
     <string name="re_password_warning">Must match password</string>
     <string name="registration">Registration</string>
+    <string name="welcome_to_gourmet_guide">Welcome to Gourmet Guide</string>
+    <string name="welcome_message">Discover the best gourmet experiences around you. Let’s embark on a culinary journey together.</string>
+    <string name="start_your_journey">Start your journey</string>
+    <string name="log_in_no_u">Log In</string>
+    <string name="welcomeback_msg">Welcome back! You\'r just a tap away from something delicious.</string>
 </resources>

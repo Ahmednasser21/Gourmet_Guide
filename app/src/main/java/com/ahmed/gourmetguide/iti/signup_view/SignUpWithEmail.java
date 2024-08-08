@@ -104,7 +104,8 @@ public class SignUpWithEmail extends Fragment {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-
+                                    NavDirections action = SignUpWithEmailDirections.actionSignUpWithEmailToOnBoardFragment();
+                                    Navigation.findNavController(v).navigate(action);
                                     Log.d(TAG, "createUserWithEmail:success");
 
                                 } else {
@@ -118,7 +119,7 @@ public class SignUpWithEmail extends Fragment {
 
                                     } catch (Exception e) {
                                         Log.w(TAG, "createUserWithEmail:failure", e);
-                                        Toast.makeText(getContext(), "Sign up failed. Please try again.", Toast.LENGTH_LONG).show();
+                                        emailWarningText.setVisibility(View.VISIBLE);
                                     }
 
                                 }

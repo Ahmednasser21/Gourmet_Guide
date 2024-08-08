@@ -23,10 +23,18 @@
         <action
             android:id="@+id/action_signUpWithEmail_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_signUpWithEmail_to_onBoardFragment"
+            app:destination="@id/onBoardFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.ahmed.gourmetguide.iti.signup_view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/onBoardFragment"
+        android:name="com.ahmed.gourmetguide.iti.signup_view.OnBoardFragment"
+        android:label="fragment_on_board"
+        tools:layout="@layout/fragment_on_board" />
 </navigation>
