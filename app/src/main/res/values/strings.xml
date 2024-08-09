@@ -14,6 +14,7 @@
     <string name="sign_up_words">Save many delicious recipes \nfrom all over the world</string>
     <string name="display_name">Display Name</string>
     <string name="e_mail">E-Mail</string>
+    <string name="default_web_client_id">101349758916-fbj94n32aj2eb2sr3ugv6oplc02i2iku.apps.googleusercontent.com</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="user_name_warning">User name should be 2 or more characters</string>
@@ -26,4 +27,8 @@
     <string name="start_your_journey">Start your journey</string>
     <string name="log_in_no_u">Log In</string>
     <string name="welcomeback_msg">Welcome back! You\'r just a tap away from something delicious.</string>
+    <string name="start_cooking">START COOKING!</string>
+    <string name="facebook_app_id">517678213975189</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">c9ca181517aa350ac92a70bbb204bcf6</string>
 </resources>
