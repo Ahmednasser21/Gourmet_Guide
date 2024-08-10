@@ -55,24 +55,11 @@
         android:minHeight="48dp"
         android:textColorHint="#585656"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv_name_warning"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-    <TextView
-        android:id="@+id/tv_name_warning"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/user_name_warning"
-        android:textColor="#FC0000"
         app:layout_constraintBottom_toTopOf="@+id/edt_email"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/edt_user_name"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
     <EditText
         android:id="@+id/edt_email"
@@ -85,25 +72,11 @@
         android:minHeight="48dp"
         android:textColorHint="#585656"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv_email_warning"
+        app:layout_constraintBottom_toTopOf="@+id/edt_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name_warning"
-        />
-
-    <TextView
-        android:id="@+id/tv_email_warning"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/email_warning"
-        android:textColor="#FC0000"
-        app:layout_constraintBottom_toTopOf="@+id/edt_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/edt_user_name" />
 
     <EditText
         android:id="@+id/edt_password"
@@ -116,24 +89,11 @@
         android:minHeight="48dp"
         android:textColorHint="#585656"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv_password_warning"
+        app:layout_constraintBottom_toTopOf="@+id/edt_re_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email_warning" />
-
-    <TextView
-        android:id="@+id/tv_password_warning"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/password_warning"
-        android:textColor="#FC0000"
-        app:layout_constraintBottom_toTopOf="@+id/edt_re_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/edt_password"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/edt_email" />
 
     <EditText
         android:id="@+id/edt_re_password"
@@ -146,24 +106,12 @@
         android:minHeight="48dp"
         android:textColorHint="#585656"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv_rePassword_warning"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password_warning" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_password" />
 
-    <TextView
-        android:id="@+id/tv_rePassword_warning"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/re_password_warning"
-        android:textColor="#FC0000"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/edt_re_password"
-        android:visibility="gone"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
