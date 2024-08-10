@@ -1,5 +1,9 @@
 package com.ahmed.gourmetguide.iti.signup_view;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,11 +13,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.ahmed.gourmetguide.iti.MainActivity;
 import com.ahmed.gourmetguide.iti.R;
 
 public class OnBoardFragment extends Fragment {
 
+    private Button startJourney;
+    SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,13 +31,21 @@ public class OnBoardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_login_file_key), MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         return inflater.inflate(R.layout.fragment_on_board, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        startJourney = view.findViewById(R.id.btn_start_journey);
+        startJourney.setOnClickListener(v->{
+            editor.putBoolean(getString(R.string.preferences_is_logged_in),true);
+            editor.apply();
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
+        });
 
     }
 }

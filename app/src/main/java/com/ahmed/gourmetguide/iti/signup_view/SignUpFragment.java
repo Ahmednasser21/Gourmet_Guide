@@ -34,12 +34,10 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.facebook.appevents.AppEventsLogger;
 
 import java.util.Arrays;
@@ -56,7 +54,6 @@ public class SignUpFragment extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInAccount account;
     CallbackManager callbackManager;
-    private static final String EMAIL = "email";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,37 +71,29 @@ public class SignUpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rootView = view;
 
-        // Initialize Google Sign-In options
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
-        // Initialize the Google Sign-In client
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
-        // Other view initializations
         myProgressBar = view.findViewById(R.id.progressBar_signUp);
         facebookSignUp = view.findViewById(R.id.btn_facebook);
         googleSignUp = view.findViewById(R.id.btn_google);
-
-        // Set up Facebook Login
         setupFacebookLogin();
 
-        // Set up Google Sign-Up button listener
         googleSignUp.setOnClickListener(v -> {
             myProgressBar.setVisibility(View.VISIBLE);
             signIn();
         });
 
-        // Set up Email Sign-Up
         signUpWithEmail = view.findViewById(R.id.tv_signup_email);
         signUpWithEmail.setOnClickListener(v -> {
             NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToSignUpWithEmail();
             Navigation.findNavController(v).navigate(action);
         });
 
-        // Set up Go To Login
         goToLogin = view.findViewById(R.id.tv_login);
         goToLogin.setOnClickListener(v -> {
             NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment();
@@ -120,7 +109,6 @@ public class SignUpFragment extends Fragment {
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
         if (isLoggedIn) {
-            Toast.makeText(getActivity(), "Already logged in with Facebook", Toast.LENGTH_SHORT).show();
             NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToOnBoardFragment();
             Navigation.findNavController(rootView).navigate(action);
         } else {
@@ -132,8 +120,6 @@ public class SignUpFragment extends Fragment {
                     public void onSuccess(LoginResult loginResult) {
                         handleFacebookAccessToken(loginResult.getAccessToken());
                         Toast.makeText(getActivity(), "Facebook Login Successful", Toast.LENGTH_SHORT).show();
-//                        NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToOnBoardFragment();
-//                        Navigation.findNavController(rootView).navigate(action);
                     }
 
                     @Override
@@ -192,11 +178,9 @@ public class SignUpFragment extends Fragment {
         FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener(getActivity(), task -> {
                     if (task.isSuccessful()) {
-                        // Sign-in success
                         NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToOnBoardFragment();
                         Navigation.findNavController(rootView).navigate(action);
                     } else {
-                        // Sign-in failure
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
                         Toast.makeText(getActivity(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
                     }

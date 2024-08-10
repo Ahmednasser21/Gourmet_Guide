@@ -37,7 +37,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class SignUpWithEmail extends Fragment {
 
     EditText displayNameText, emailText, passwordText, rePasswordText;
-    TextView nameWarningText, emailWarningText, passwordWarningText, rePasswordWarningText;
     ProgressBar progressBar;
     Button signUp;
     FirebaseAuth mAuth;
@@ -61,23 +60,12 @@ public class SignUpWithEmail extends Fragment {
         passwordText = view.findViewById(R.id.edt_password);
         rePasswordText = view.findViewById(R.id.edt_re_password);
 
-        nameWarningText = view.findViewById(R.id.tv_name_warning);
-        emailWarningText = view.findViewById(R.id.tv_email_warning);
-        passwordWarningText = view.findViewById(R.id.tv_password_warning);
-        rePasswordWarningText = view.findViewById(R.id.tv_rePassword_warning);
-
         progressBar = view.findViewById(R.id.progressBar);
         signUp = view.findViewById(R.id.btn_signUp_email);
-
 
         mAuth = FirebaseAuth.getInstance();
 
         signUp.setOnClickListener(v -> {
-
-            nameWarningText.setVisibility(View.GONE);
-            emailWarningText.setVisibility(View.GONE);
-            passwordWarningText.setVisibility(View.GONE);
-            rePasswordWarningText.setVisibility(View.GONE);
 
             String name, email, password, rePassword;
             name = String.valueOf(displayNameText.getText());
@@ -86,15 +74,16 @@ public class SignUpWithEmail extends Fragment {
             rePassword = String.valueOf(rePasswordText.getText());
 
             if (TextUtils.isEmpty(name) || name.length() < 2) {
-                nameWarningText.setVisibility(View.VISIBLE);
+                displayNameText.setError("Display name should be more than 2 characters");
+
             } else if (TextUtils.isEmpty(email) || !email.contains("@") || !email.contains(".com")) {
-                emailWarningText.setVisibility(View.VISIBLE);
-                return;
+                emailText.setError("Please enter a valid Email");
+
             } else if (TextUtils.isEmpty(password) || password.length() < 6) {
-                passwordWarningText.setVisibility(View.VISIBLE);
-                return;
+                passwordText.setError("Password should be more than 6 characters");
+
             } else if (TextUtils.isEmpty(rePassword) || !rePassword.equals(password)) {
-                rePasswordWarningText.setVisibility(View.VISIBLE);
+                rePasswordText.setError("Must match password");
 
             } else {
                 progressBar.setVisibility(View.VISIBLE);
@@ -119,7 +108,7 @@ public class SignUpWithEmail extends Fragment {
 
                                     } catch (Exception e) {
                                         Log.w(TAG, "createUserWithEmail:failure", e);
-                                        emailWarningText.setVisibility(View.VISIBLE);
+                                        emailText.setError("Please enter a valid Email");
                                     }
 
                                 }
