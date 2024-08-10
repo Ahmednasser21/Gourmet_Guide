@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="287dp" />
+        app:layout_constraintGuide_end="300dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -75,7 +75,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/white_curved_background"
         android:gravity="center"
         android:text="@string/sign_up_with_email"
@@ -103,7 +103,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/already_have_an_account"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -119,7 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/log_in"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -167,17 +167,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="60dp"
-        android:layout_height="35dp"
+    <Button
+        android:id="@+id/btn_skip"
+        android:layout_width="85dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/semidark_curved_background"
+        android:backgroundTint="#BF000F0F"
         android:gravity="center"
-        android:text="Skip"
+        android:text="@string/skip"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
