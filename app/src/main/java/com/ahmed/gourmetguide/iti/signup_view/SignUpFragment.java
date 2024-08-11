@@ -23,7 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ahmed.gourmetguide.iti.HomeActivity;
+import com.ahmed.gourmetguide.iti.home.home_view.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
