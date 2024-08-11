@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ahmed.gourmetguide.iti.HomeActivity;
+import com.ahmed.gourmetguide.iti.home.home_view.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
