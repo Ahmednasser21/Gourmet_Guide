@@ -2,6 +2,8 @@ package com.ahmed.gourmetguide.iti;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ahmed.gourmetguide.iti.signup_view.SignUpActivity;
@@ -18,9 +20,9 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        new android.os.Handler().postDelayed(() -> {
+        new Handler().postDelayed(() -> {
             startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
             finish();
-        }, 4000); // Delay for 3 seconds
+        }, 3000);
     }
 }

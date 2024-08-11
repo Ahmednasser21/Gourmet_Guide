@@ -3,7 +3,6 @@ package com.ahmed.gourmetguide.iti.signup_view;
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,7 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ahmed.gourmetguide.iti.MainActivity;
+import com.ahmed.gourmetguide.iti.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -111,7 +110,7 @@ public class SignUpFragment extends Fragment {
                     getSharedPreferences(getString(R.string.preference_login_file_key), MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(getString(R.string.preferences_is_guest),true);
-            startActivity(new Intent(getActivity(), MainActivity.class));
+            startActivity(new Intent(getActivity(), HomeActivity.class));
         });
     }
 

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.ahmed.gourmetguide.iti.MainActivity;
+import com.ahmed.gourmetguide.iti.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
 
 
@@ -24,12 +24,12 @@ public class SignUpActivity extends AppCompatActivity {
         boolean loggedIn = sharedPreferences.getBoolean(getString(R.string.preferences_is_logged_in),false);
 
         if (loggedIn){
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
         setContentView(R.layout.activity_sign_up);
 
-        navController = Navigation.findNavController(this,R.id.fragmentContainerView);
+        navController = Navigation.findNavController(this,R.id.signUpFragmentContainerView);
 
     }
 }
