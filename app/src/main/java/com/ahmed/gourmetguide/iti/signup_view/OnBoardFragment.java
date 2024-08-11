@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.ahmed.gourmetguide.iti.MainActivity;
+import com.ahmed.gourmetguide.iti.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
 
 public class OnBoardFragment extends Fragment {
@@ -43,7 +43,7 @@ public class OnBoardFragment extends Fragment {
         startJourney.setOnClickListener(v->{
             editor.putBoolean(getString(R.string.preferences_is_logged_in),true);
             editor.apply();
-            startActivity(new Intent(getActivity(), MainActivity.class));
+            startActivity(new Intent(getActivity(), HomeActivity.class));
             getActivity().finish();
         });
 

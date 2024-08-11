@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ahmed.gourmetguide.iti.MainActivity;
+import com.ahmed.gourmetguide.iti.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -82,7 +82,7 @@ public class LoginFragment extends Fragment {
                                 Toast.LENGTH_SHORT).show();
                         editor.putBoolean(getString(R.string.preferences_is_logged_in),true);
                         editor.apply();
-                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        startActivity(new Intent(getActivity(), HomeActivity.class));
                         getActivity().finish();
                     } else {
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
