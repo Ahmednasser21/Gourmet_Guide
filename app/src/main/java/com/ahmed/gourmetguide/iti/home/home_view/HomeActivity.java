@@ -1,4 +1,4 @@
-package com.ahmed.gourmetguide.iti;
+package com.ahmed.gourmetguide.iti.home.home_view;
 
 import android.os.Bundle;
 
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.ahmed.gourmetguide.iti.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
