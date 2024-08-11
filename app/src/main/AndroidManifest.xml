@@ -18,7 +18,7 @@
         android:theme="@style/Theme.GourmetGuide"
         tools:targetApi="31">
         <activity
-            android:name=".HomeActivity"
+            android:name=".home.home_view.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.GourmetGuide" />
 
