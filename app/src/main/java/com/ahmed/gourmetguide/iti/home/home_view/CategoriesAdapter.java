@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ahmed.gourmetguide.iti.R;
@@ -44,7 +46,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         Glide.with(context)
                 .load(category.getStrCategoryThumb())
                 .into(holder.categoryImage);
+        holder.row.setOnClickListener(v->{
+            NavDirections action = HomeFragmentDirections.actionHomeFragmentToCategoryMeals(category.getStrCategory());
+            Navigation.findNavController(v).navigate(action);
+        });
     }
+
 
     @Override
     public int getItemCount() {

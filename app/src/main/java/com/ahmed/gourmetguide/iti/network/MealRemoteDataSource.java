@@ -2,6 +2,7 @@ package com.ahmed.gourmetguide.iti.network;
 
 import android.util.Log;
 
+import com.ahmed.gourmetguide.iti.model.CategoryMealsResponse;
 import com.ahmed.gourmetguide.iti.model.CategoryResponse;
 import com.ahmed.gourmetguide.iti.model.MealResponse;
 
@@ -38,6 +39,7 @@ public class MealRemoteDataSource {
         }
         return mealsRemoteDataSource;
     }
+
     public void getRandomMeal(RandomMealCallBack randomMealCallBack) {
         Single<MealResponse> randomMeal = networkService.getRandomMeal();
         randomMeal.subscribeOn(Schedulers.io())
@@ -61,7 +63,8 @@ public class MealRemoteDataSource {
                     }
                 });
     }
-    public void getCategories(CategoriesCallBack categoriesCallBack){
+
+    public void getCategories(CategoriesCallBack categoriesCallBack) {
         Observable<CategoryResponse> category = networkService.getCategories();
         category.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -89,5 +92,29 @@ public class MealRemoteDataSource {
                     }
                 });
 
+    }
+
+    public void getCategoryMeals(CategoryMealsCallBack categoryMealsCallBack, String categoryName) {
+        Single<CategoryMealsResponse> categoryMeals = networkService.getCategoryMeals(categoryName);
+        categoryMeals.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<CategoryMealsResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: Random meal ");
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull CategoryMealsResponse categoryMealsResponse) {
+                        categoryMealsCallBack.onCategoryMealsSuccessResult(categoryMealsResponse);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                        categoryMealsCallBack.onCategoryMealsFailureResult(e.getMessage());
+
+                    }
+                });
     }
 }

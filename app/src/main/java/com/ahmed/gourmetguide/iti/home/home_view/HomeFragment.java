@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment implements OnRandomMealView,OnCategor
 
     @Override
     public void onRandomMealFailure(String msg) {
-        Toast.makeText(getContext(),"msg",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"msg random",Toast.LENGTH_LONG).show();
         randomMeal = new MealDTO();
     }
 
@@ -93,6 +93,6 @@ public class HomeFragment extends Fragment implements OnRandomMealView,OnCategor
 
     @Override
     public void onCategoryFailure(String errorMsg) {
-        Toast.makeText(getContext(),"msg",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"msg category",Toast.LENGTH_LONG).show();
     }
 }

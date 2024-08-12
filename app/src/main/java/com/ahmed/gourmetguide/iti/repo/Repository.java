@@ -3,6 +3,7 @@ package com.ahmed.gourmetguide.iti.repo;
 import android.content.Context;
 
 import com.ahmed.gourmetguide.iti.network.CategoriesCallBack;
+import com.ahmed.gourmetguide.iti.network.CategoryMealsCallBack;
 import com.ahmed.gourmetguide.iti.network.MealRemoteDataSource;
 import com.ahmed.gourmetguide.iti.network.RandomMealCallBack;
 
@@ -28,6 +29,11 @@ public class Repository {
 
     public void  getCategory(CategoriesCallBack categoriesCallBack){
         mealRemoteDataSource.getCategories(categoriesCallBack);
+    }
+
+    public void getCategoryMeals(CategoryMealsCallBack categoryMealsCallBack,String categoryName) {
+
+        mealRemoteDataSource.getCategoryMeals(categoryMealsCallBack,categoryName);
     }
 
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,12 +68,16 @@ public class MealDetails extends Fragment {
         mealIngredients.setAdapter(mealDetailsAdapter);
 
         videoURL = meal.getStrYoutube();
-        String videoURL = meal.getStrYoutube();
-        String videoID = videoURL.split("v=")[1];
-        String video = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/" + videoID + "\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
-        webView.loadData(video, "text/html","utf-8");
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient());
+        if (videoURL != null && !videoURL.isEmpty()) {
+            String videoID = videoURL.split("v=")[1];
+            String video = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/" + videoID + "\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
+            WebView webView = view.findViewById(R.id.webView);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.setWebChromeClient(new WebChromeClient());
+            webView.loadData(video, "text/html", "utf-8");
+        } else {
+            Log.e("VideoError", "Video URL is null or empty");
+        }
 
 
     }

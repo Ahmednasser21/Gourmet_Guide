@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_mealDetails"
             app:destination="@id/mealDetails" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoryMeals"
+            app:destination="@id/categoryMeals" />
     </fragment>
     <fragment
         android:id="@+id/mealDetails"
@@ -22,5 +25,17 @@
         <argument
             android:name="mealDetails"
             app:argType="com.ahmed.gourmetguide.iti.model.MealDTO" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryMeals"
+        android:name="com.ahmed.gourmetguide.iti.category_meals.category_meals_view.CategoryMeals"
+        android:label="Category Meals"
+        tools:layout="@layout/fragment_category_meals">
+        <action
+            android:id="@+id/action_categoryMeals_to_mealDetails"
+            app:destination="@id/mealDetails" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
     </fragment>
 </navigation>

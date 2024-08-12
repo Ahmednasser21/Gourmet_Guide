@@ -54,4 +54,5 @@
     <string name="instructions">Instructions</string>
     <string name="recipe_video">Recipe video</string>
     <string name="youtube_api_key">AIzaSyBK_mI2bP4fnVrJhqquKPcvDiJw7uuIa10</string>
+    <string name="category_meal">Category meal</string>
 </resources>
