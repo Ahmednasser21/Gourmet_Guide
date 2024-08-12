@@ -4,7 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,8 +20,8 @@ import android.widget.Toast;
 
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.home.home_presenter.HomePresenter;
-import com.ahmed.gourmetguide.iti.network.CategoryDTO;
-import com.ahmed.gourmetguide.iti.network.MealDTO;
+import com.ahmed.gourmetguide.iti.model.CategoryDTO;
+import com.ahmed.gourmetguide.iti.model.MealDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 import com.bumptech.glide.Glide;
 
@@ -30,6 +33,8 @@ public class HomeFragment extends Fragment implements OnRandomMealView,OnCategor
     TextView randomMealName;
     CategoriesAdapter categoriesAdapter;
     RecyclerView categoriesRecycler;
+    CardView randomMealCard;
+    MealDTO randomMeal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,12 @@ public class HomeFragment extends Fragment implements OnRandomMealView,OnCategor
         homePresenter.getCategories();
 
         categoriesRecycler = view.findViewById(R.id.categories_rec);
+        randomMealCard = view.findViewById(R.id.cardView);
+
+        randomMealCard.setOnClickListener(v->{
+            NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealDetails(randomMeal);
+            Navigation.findNavController(v).navigate(action);
+        });
 
     }
 
@@ -62,12 +73,13 @@ public class HomeFragment extends Fragment implements OnRandomMealView,OnCategor
         Glide.with(getContext())
                 .load(meal.getStrMealThumb())
                 .into(randomMealImg);
-
+        randomMeal = meal;
     }
 
     @Override
     public void onRandomMealFailure(String msg) {
         Toast.makeText(getContext(),"msg",Toast.LENGTH_LONG).show();
+        randomMeal = new MealDTO();
     }
 
     @Override

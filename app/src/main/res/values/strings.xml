@@ -48,4 +48,10 @@
     <string name="daily_inspiration_meal">Daily inspiration meal</string>
     <string name="categories">Categories</string>
     <string name="category_image">Category Image</string>
+    <string name="meal_ingredients">Meal Ingredients</string>
+    <string name="recipe">RECIPE</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="recipe_video">Recipe video</string>
+    <string name="youtube_api_key">AIzaSyBK_mI2bP4fnVrJhqquKPcvDiJw7uuIa10</string>
 </resources>

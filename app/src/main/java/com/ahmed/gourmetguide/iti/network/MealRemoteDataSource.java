@@ -2,6 +2,9 @@ package com.ahmed.gourmetguide.iti.network;
 
 import android.util.Log;
 
+import com.ahmed.gourmetguide.iti.model.CategoryResponse;
+import com.ahmed.gourmetguide.iti.model.MealResponse;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;

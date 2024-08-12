@@ -1,9 +1,9 @@
-package com.ahmed.gourmetguide.iti.network;
+package com.ahmed.gourmetguide.iti.model;
 
 import java.util.List;
 
 public class CategoryResponse {
-    List <CategoryDTO> categories;
+    public List <CategoryDTO> categories;
 
     public List<CategoryDTO> getCategories() {
         return categories;

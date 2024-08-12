@@ -1,6 +1,6 @@
 package com.ahmed.gourmetguide.iti.home.home_view;
 
-import com.ahmed.gourmetguide.iti.network.CategoryDTO;
+import com.ahmed.gourmetguide.iti.model.CategoryDTO;
 
 import java.util.List;
 
