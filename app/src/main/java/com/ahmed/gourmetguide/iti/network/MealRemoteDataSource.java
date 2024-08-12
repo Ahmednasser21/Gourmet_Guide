@@ -117,4 +117,27 @@ public class MealRemoteDataSource {
                     }
                 });
     }
+    public void getMealByID(MealByIdCallBack mealByIdCallBack,String mealId) {
+        Single<MealResponse> randomMeal = networkService.getMealById(mealId);
+        randomMeal.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<MealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: Random meal ");
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull MealResponse mealResponse) {
+                        mealByIdCallBack.onMealByIdSuccessResult(mealResponse);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                        mealByIdCallBack.onMealByIdFailureResult(e.getMessage());
+
+                    }
+                });
+    }
 }

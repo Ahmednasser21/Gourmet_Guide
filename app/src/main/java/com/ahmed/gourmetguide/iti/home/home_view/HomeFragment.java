@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment implements OnRandomMealView,OnCategor
         randomMealCard = view.findViewById(R.id.cardView);
 
         randomMealCard.setOnClickListener(v->{
-            NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealDetails(randomMeal);
+            NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealDetails(randomMeal.getIdMeal());
             Navigation.findNavController(v).navigate(action);
         });
 

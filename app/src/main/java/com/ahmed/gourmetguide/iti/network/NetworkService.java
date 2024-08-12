@@ -18,5 +18,8 @@ public interface NetworkService {
 
     @GET("filter.php")
     Single<CategoryMealsResponse> getCategoryMeals(@Query("c")String categoryName);
+
+    @GET("lookup.php")
+    Single<MealResponse>getMealById(@Query("i")String categoryName);
 }
 

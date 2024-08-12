@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ahmed.gourmetguide.iti.R;
@@ -43,6 +45,11 @@ public class CategoryMealsAdapter extends RecyclerView.Adapter<CategoryMealsAdap
         Glide.with(context)
                 .load(meal.getStrMealThumb())
                 .into(holder.mealImage);
+        holder.row.setOnClickListener(v->{
+
+            NavDirections action =CategoryMealsDirections.actionCategoryMealsToMealDetails(meal.getIdMeal());
+            Navigation.findNavController(v).navigate(action);
+        });
     }
 
     @Override

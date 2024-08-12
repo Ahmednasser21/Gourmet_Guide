@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetails"
-        android:name="com.ahmed.gourmetguide.iti.home.home_view.MealDetails"
+        android:name="com.ahmed.gourmetguide.iti.meal_details_by_id.meal_view.MealDetails"
         android:label="Meal Details"
         tools:layout="@layout/fragment_meal_details">
         <argument
-            android:name="mealDetails"
-            app:argType="com.ahmed.gourmetguide.iti.model.MealDTO" />
+            android:name="mealId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/categoryMeals"

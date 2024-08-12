@@ -1,4 +1,4 @@
-package com.ahmed.gourmetguide.iti.home.home_view;
+package com.ahmed.gourmetguide.iti.meal_details_by_id.meal_view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
