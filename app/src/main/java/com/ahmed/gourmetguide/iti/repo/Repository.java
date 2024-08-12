@@ -2,8 +2,9 @@ package com.ahmed.gourmetguide.iti.repo;
 
 import android.content.Context;
 
+import com.ahmed.gourmetguide.iti.network.CategoriesCallBack;
 import com.ahmed.gourmetguide.iti.network.MealRemoteDataSource;
-import com.ahmed.gourmetguide.iti.network.NetworkCallback;
+import com.ahmed.gourmetguide.iti.network.RandomMealCallBack;
 
 public class Repository {
 
@@ -12,7 +13,6 @@ public class Repository {
 
     private Repository(Context context) {
         mealRemoteDataSource = MealRemoteDataSource.getInstance();
-
     }
 
     public static Repository getInstance(Context context) {
@@ -22,7 +22,12 @@ public class Repository {
         return instance;
     }
 
-    public void  makeNetworkCall(NetworkCallback networkCallback){
-        mealRemoteDataSource.makeNetworkCall(networkCallback);
+    public void getRandomMeal(RandomMealCallBack randomMealCallBack){
+        mealRemoteDataSource.getRandomMeal(randomMealCallBack);
     }
+
+    public void  getCategory(CategoriesCallBack categoriesCallBack){
+        mealRemoteDataSource.getCategories(categoriesCallBack);
+    }
+
 }

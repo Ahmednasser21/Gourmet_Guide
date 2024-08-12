@@ -3,7 +3,7 @@ package com.ahmed.gourmetguide.iti.network;
 import java.util.List;
 
 public class MealResponse {
-List<MealDTO> meals;
+    List<MealDTO> meals;
 
     public List<MealDTO> getMeals() {
         return meals;
