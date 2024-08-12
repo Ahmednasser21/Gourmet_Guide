@@ -46,4 +46,6 @@
     <string name="calender">Calender</string>
     <string name="daily_inspiration">Daily Inspiration</string>
     <string name="daily_inspiration_meal">Daily inspiration meal</string>
+    <string name="categories">Categories</string>
+    <string name="category_image">Category Image</string>
 </resources>

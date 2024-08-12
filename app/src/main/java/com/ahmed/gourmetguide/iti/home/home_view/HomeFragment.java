@@ -5,23 +5,31 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.home.home_presenter.HomePresenter;
+import com.ahmed.gourmetguide.iti.network.CategoryDTO;
 import com.ahmed.gourmetguide.iti.network.MealDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 import com.bumptech.glide.Glide;
 
-public class HomeFragment extends Fragment implements OnRandomMealView {
+import java.util.List;
+
+public class HomeFragment extends Fragment implements OnRandomMealView,OnCategoryView {
     HomePresenter homePresenter;
     ImageView randomMealImg;
     TextView randomMealName;
+    CategoriesAdapter categoriesAdapter;
+    RecyclerView categoriesRecycler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,21 +48,39 @@ public class HomeFragment extends Fragment implements OnRandomMealView {
 
         randomMealImg = view.findViewById(R.id.img_card_image);
         randomMealName = view.findViewById(R.id.tv_card_daily);
-        homePresenter = new HomePresenter(Repository.getInstance(getContext()),this);
+        homePresenter = new HomePresenter(Repository.getInstance(getContext()),this,this);
         homePresenter.getRandomMeal();
+        homePresenter.getCategories();
+
+        categoriesRecycler = view.findViewById(R.id.categories_rec);
 
     }
 
     @Override
     public void onRandomMealSuccess(MealDTO meal) {
         randomMealName.setText(meal.getStrMeal());
-        Glide.with(getContext()).load(meal.getStrMealThumb())
+        Glide.with(getContext())
+                .load(meal.getStrMealThumb())
                 .into(randomMealImg);
 
     }
 
     @Override
     public void onRandomMealFailure(String msg) {
+        Toast.makeText(getContext(),"msg",Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void onCategorySuccess(List<CategoryDTO> categories) {
+        categoriesAdapter = new CategoriesAdapter(getContext(),categories);
+        categoriesRecycler.setAdapter(categoriesAdapter);
+        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        categoriesRecycler.setLayoutManager(linearLayoutManager);
+    }
+
+    @Override
+    public void onCategoryFailure(String errorMsg) {
+        Toast.makeText(getContext(),"msg",Toast.LENGTH_LONG).show();
     }
 }
