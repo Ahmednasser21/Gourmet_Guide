@@ -1,4 +1,4 @@
-package com.ahmed.gourmetguide.iti.network;
+package com.ahmed.gourmetguide.iti.model;
 
 import java.util.List;
 

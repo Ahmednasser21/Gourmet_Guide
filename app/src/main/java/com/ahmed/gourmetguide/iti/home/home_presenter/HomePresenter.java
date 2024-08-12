@@ -4,8 +4,8 @@ package com.ahmed.gourmetguide.iti.home.home_presenter;
 import com.ahmed.gourmetguide.iti.home.home_view.OnCategoryView;
 import com.ahmed.gourmetguide.iti.home.home_view.OnRandomMealView;
 import com.ahmed.gourmetguide.iti.network.CategoriesCallBack;
-import com.ahmed.gourmetguide.iti.network.CategoryResponse;
-import com.ahmed.gourmetguide.iti.network.MealResponse;
+import com.ahmed.gourmetguide.iti.model.CategoryResponse;
+import com.ahmed.gourmetguide.iti.model.MealResponse;
 import com.ahmed.gourmetguide.iti.network.RandomMealCallBack;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 

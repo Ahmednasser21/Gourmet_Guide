@@ -12,7 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ahmed.gourmetguide.iti.R;
-import com.ahmed.gourmetguide.iti.network.CategoryDTO;
+import com.ahmed.gourmetguide.iti.model.CategoryDTO;
 import com.bumptech.glide.Glide;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.ahmed.gourmetguide.iti.network;
 
-import java.util.List;
+import com.ahmed.gourmetguide.iti.model.MealResponse;
 
 public interface NetworkCallback {
     void onSuccessResult(MealResponse mealResponse);

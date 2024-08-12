@@ -1,6 +1,8 @@
-package com.ahmed.gourmetguide.iti.network;
+package com.ahmed.gourmetguide.iti.model;
 
-public class MealDTO {
+import java.io.Serializable;
+
+public class MealDTO implements Serializable {
     String strMeal;
     String idMeal;
     String strCategory;
@@ -49,6 +51,7 @@ public class MealDTO {
     String strMeasure18;
     String strMeasure19;
     String strMeasure20;
+
 
 
     public String getStrMeasure10() {

@@ -8,6 +8,19 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.ahmed.gourmetguide.iti.home.home_view.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_mealDetails"
+            app:destination="@id/mealDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDetails"
+        android:name="com.ahmed.gourmetguide.iti.home.home_view.MealDetails"
+        android:label="Meal Details"
+        tools:layout="@layout/fragment_meal_details">
+        <argument
+            android:name="mealDetails"
+            app:argType="com.ahmed.gourmetguide.iti.model.MealDTO" />
+    </fragment>
 </navigation>
