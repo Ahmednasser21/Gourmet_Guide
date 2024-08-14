@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="My Favourite Recipes"
+        android:text="@string/favourite_recipes"
         android:textColor="@color/primary_color"
         android:textSize="24sp"
         android:textStyle="bold"

@@ -59,6 +59,13 @@
     <string name="country">Country</string>
     <string name="meals">Meals</string>
     <string name="delete">Delete</string>
-    <string name="my_plans_recipes">My Plans Recipes</string>
+    <string name="my_plans_recipes">Recipe Plans</string>
     <string name="delete_Fav">Delete</string>
+    <string name="favourite_recipes">Favourite Recipes</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="e_mail2">E-Mail:</string>
+    <string name="change_password">Change Password</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="textview">TextView</string>
+    <string name="confirm">Confirm</string>
 </resources>

@@ -2,6 +2,7 @@ package com.ahmed.gourmetguide.iti.signup_view;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -75,19 +76,20 @@ public class LoginFragment extends Fragment {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), task -> {
                     if (task.isSuccessful()) {
-
                         FirebaseUser user = mAuth.getCurrentUser();
                         Log.d(TAG, "signInWithEmail:success");
-                        Toast.makeText(getActivity(), "Authentication Successful.",
-                                Toast.LENGTH_SHORT).show();
-                        editor.putBoolean(getString(R.string.preferences_is_logged_in),true);
+                        Toast.makeText(getActivity(), "Authentication Successful.", Toast.LENGTH_SHORT).show();
+
+                        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean(getString(R.string.preferences_is_logged_in), true);
                         editor.apply();
+
                         startActivity(new Intent(getActivity(), HomeActivity.class));
-                        getActivity().finish();
+                        requireActivity().finish();
                     } else {
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(getActivity(), "Authentication Failed.",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -39,5 +39,9 @@
         android:id="@+id/onBoardFragment"
         android:name="com.ahmed.gourmetguide.iti.signup_view.OnBoardFragment"
         android:label="fragment_on_board"
-        tools:layout="@layout/fragment_on_board" />
+        tools:layout="@layout/fragment_on_board" >
+        <action
+            android:id="@+id/action_onBoardFragment_to_signUpWithEmail"
+            app:destination="@id/signUpWithEmail" />
+    </fragment>
 </navigation>

@@ -2,6 +2,7 @@ package com.ahmed.gourmetguide.iti.signup_view;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,13 +42,17 @@ public class OnBoardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        startJourney = view.findViewById(R.id.btn_start_journey);
-        startJourney.setOnClickListener(v->{
-            editor.putBoolean(getString(R.string.preferences_is_logged_in),true);
-            editor.apply();
-            startActivity(new Intent(getActivity(), HomeActivity.class));
-            getActivity().finish();
-        });
 
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        startJourney = view.findViewById(R.id.btn_start_journey);
+        startJourney.setOnClickListener(v -> {
+            editor.putBoolean(getString(R.string.preferences_is_logged_in), true);
+            editor.apply();
+
+            startActivity(new Intent(getActivity(), HomeActivity.class));
+            requireActivity().finish();
+        });
     }
 }

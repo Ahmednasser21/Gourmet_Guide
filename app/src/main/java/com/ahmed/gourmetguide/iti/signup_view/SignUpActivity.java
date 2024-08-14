@@ -11,25 +11,27 @@ import androidx.navigation.Navigation;
 import com.ahmed.gourmetguide.iti.home.home_view.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
 
-
 public class SignUpActivity extends AppCompatActivity {
 
-    NavController navController;
-    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedPreferences = getSharedPreferences(getString(R.string.preference_login_file_key),MODE_PRIVATE);
-        boolean loggedIn = sharedPreferences.getBoolean(getString(R.string.preferences_is_logged_in),false);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_login_file_key), MODE_PRIVATE);
+        boolean loggedIn = sharedPreferences.getBoolean(getString(R.string.preferences_is_logged_in), false);
 
-        if (loggedIn){
+        if (loggedIn) {
             startActivity(new Intent(this, HomeActivity.class));
             finish();
+            return;
         }
+
         setContentView(R.layout.activity_sign_up);
 
-        navController = Navigation.findNavController(this,R.id.signUpFragmentContainerView);
+        NavController navController = Navigation.findNavController(this, R.id.signUpFragmentContainerView);
 
+        if (savedInstanceState == null) {
+            navController.navigate(R.id.signUpFragment);
+        }
     }
 }
