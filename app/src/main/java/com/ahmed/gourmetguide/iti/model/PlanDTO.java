@@ -4,11 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
-
-@Entity(tableName = "Favourite_Meals")
-public class MealDTO implements Serializable {
+@Entity (tableName = "Plan")
+public class PlanDTO {
     String strMeal;
+    int day;
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
 
     @PrimaryKey
     @NonNull

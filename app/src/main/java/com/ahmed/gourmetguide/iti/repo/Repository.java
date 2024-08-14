@@ -2,6 +2,9 @@ package com.ahmed.gourmetguide.iti.repo;
 
 import android.content.Context;
 
+import com.ahmed.gourmetguide.iti.database.FavouriteMealsLocalDataSource;
+import com.ahmed.gourmetguide.iti.model.MealDTO;
+import com.ahmed.gourmetguide.iti.model.PlanDTO;
 import com.ahmed.gourmetguide.iti.network.CategoriesCallBack;
 import com.ahmed.gourmetguide.iti.network.CategoryMealsCallBack;
 import com.ahmed.gourmetguide.iti.network.CountryListCallBack;
@@ -12,13 +15,23 @@ import com.ahmed.gourmetguide.iti.network.MealRemoteDataSource;
 import com.ahmed.gourmetguide.iti.network.MealsByCountryCallBack;
 import com.ahmed.gourmetguide.iti.network.RandomMealCallBack;
 
+import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class Repository {
 
     private static Repository instance = null;
     MealRemoteDataSource mealRemoteDataSource;
+    FavouriteMealsLocalDataSource favouriteMealsLocalDataSource;
 
     private Repository(Context context) {
         mealRemoteDataSource = MealRemoteDataSource.getInstance();
+        favouriteMealsLocalDataSource = FavouriteMealsLocalDataSource.getInstance(context);
     }
 
     public static Repository getInstance(Context context) {
@@ -57,5 +70,48 @@ public class Repository {
     public void getMealsByCountry (MealsByCountryCallBack mealsByCountryCallBack,String country){
         mealRemoteDataSource.getMealByCountry(mealsByCountryCallBack,country);
     }
+    public Completable insertIntoFavourite(MealDTO meal){
+        return
+        favouriteMealsLocalDataSource.dao().insert(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+    public Completable updateFavourite(MealDTO meal){
+        return
+                favouriteMealsLocalDataSource.dao().Update(meal)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+    }
+    public Completable DeleteFavourite(MealDTO meal){
+        return
+        favouriteMealsLocalDataSource.dao().delete(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+    public Flowable <List<MealDTO>> getAllFavourite(){
+        return
+        favouriteMealsLocalDataSource.dao().getAllMeals()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+    public Completable deleteAllFavourite (){
+        return
+        favouriteMealsLocalDataSource.dao().deleteAllMeals()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+    public Completable insertPlanByDay(PlanDTO planDTO, int day){
+        return
+                favouriteMealsLocalDataSource.dao().insertPlanByDAy(planDTO,day)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+    }
+//    public Flowable<List<PlanDTO>> getAllPlansByDAy(int day){
+//        return
+//                favouriteMealsLocalDataSource.dao().getAllPlansByDAy(day)
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread());
+//    }
+
 
 }

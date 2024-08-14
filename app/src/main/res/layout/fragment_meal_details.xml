@@ -163,6 +163,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView29" />
 
+        <ImageView
+            android:id="@+id/add_favourite"
+            android:layout_width="55dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/baseline_favorite_50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_meal_details" />
+
+        <ImageView
+            android:id="@+id/add_to_calender"
+            android:layout_width="36dp"
+            android:layout_height="39dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/baseline_calendar_month_24"
+            app:layout_constraintEnd_toStartOf="@+id/add_favourite"
+            app:layout_constraintTop_toBottomOf="@+id/card_meal_details" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

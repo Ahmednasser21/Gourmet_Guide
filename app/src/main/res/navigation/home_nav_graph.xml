@@ -49,9 +49,13 @@
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="com.ahmed.gourmetguide.iti.FavouriteFragment"
+        android:name="com.ahmed.gourmetguide.iti.favourite.view.FavouriteFragment"
         android:label="Favourite"
-        tools:layout="@layout/fragment_favourite" />
+        tools:layout="@layout/fragment_favourite" >
+        <action
+            android:id="@+id/action_favouriteFragment_to_mealDetails"
+            app:destination="@id/mealDetails" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.ahmed.gourmetguide.iti.search.search_view.SearchFragment"
@@ -69,9 +73,13 @@
     </fragment>
     <fragment
         android:id="@+id/calenderFragment"
-        android:name="com.ahmed.gourmetguide.iti.CalenderFragment"
+        android:name="com.ahmed.gourmetguide.iti.calender.view.CalenderFragment"
         android:label="Calender"
-        tools:layout="@layout/fragment_calender" />
+        tools:layout="@layout/fragment_calender" >
+        <action
+            android:id="@+id/action_calenderFragment_to_mealDetails"
+            app:destination="@id/mealDetails" />
+    </fragment>
     <fragment
         android:id="@+id/mealsByIngredientFragment"
         android:name="com.ahmed.gourmetguide.iti.meal_by_ingredient.view.MealsByIngredientFragment"

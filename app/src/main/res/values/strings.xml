@@ -58,4 +58,6 @@
     <string name="enter_meal_name">Enter meal name</string>
     <string name="country">Country</string>
     <string name="meals">Meals</string>
+    <string name="delete">Delete</string>
+    <string name="my_plans_recipes">My Plans Recipes</string>
 </resources>
