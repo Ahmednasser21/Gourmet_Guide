@@ -99,7 +99,7 @@ public class Repository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-    public Completable insertPlanByDay(PlanDTO planDTO, int day){
+    public Completable insertPlanByDay(PlanDTO planDTO){
         return
                 favouriteMealsLocalDataSource.dao().insertPlanByDAy(planDTO)
                         .subscribeOn(Schedulers.io())

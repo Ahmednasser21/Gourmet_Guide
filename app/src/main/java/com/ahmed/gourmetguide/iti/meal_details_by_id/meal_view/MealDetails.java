@@ -89,9 +89,9 @@ public class MealDetails extends Fragment implements OnMealView {
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
-                            PlanDTO plan = new PlanDTO(dayOfMonth);
+                            PlanDTO plan = new PlanDTO(dayOfMonth,monthOfYear+1,year);
 
-                            calenderPresenter.insertIntoPlanByDAy(convertMealDtoToPlanDto(plan,tempMeal),dayOfMonth);
+                            calenderPresenter.insertIntoPlanByDAy(convertMealDtoToPlanDto(plan,tempMeal));
 
                         }
                     },

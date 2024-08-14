@@ -49,8 +49,8 @@ public class CalenderPresenter {
             }
         });
     }
-    public void insertIntoPlanByDAy(PlanDTO plan, int day){
-        repo.insertPlanByDay(plan,day).subscribe(new CompletableObserver() {
+    public void insertIntoPlanByDAy(PlanDTO plan){
+        repo.insertPlanByDay(plan).subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
 

@@ -19,10 +19,12 @@ import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.model.PlanDTO;
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> {
     List<PlanDTO> plans;
@@ -60,11 +62,16 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> {
         holder.deleteFav.setOnClickListener(v -> {
             onDeletePlanListener.onDeleteListener(meal);
         });
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMMM");
-        String currentMonth = currentDate.format(monthFormatter);
 
-        holder.day.setText(currentMonth+" "+meal.getDay()+" ");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, meal.getDay());
+        calendar.set(Calendar.MONTH, meal.getMonth());
+        calendar.set(Calendar.YEAR, meal.getYear());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+        String formattedDate = sdf.format(calendar.getTime());
+
+        holder.day.setText(formattedDate);
     }
 
 

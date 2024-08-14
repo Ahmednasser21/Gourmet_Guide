@@ -6,14 +6,18 @@ import androidx.room.PrimaryKey;
 
 @Entity (tableName = "Plan")
 public class PlanDTO {
-    public PlanDTO(int day){
+    public PlanDTO(int day,int month ,int year ){
         this.day = day;
+        this.month = month;
+        this.year = year;
     }
     String strMeal;
     @PrimaryKey
     @NonNull
     String idMeal;
-    public int day;
+    int day;
+    int month;
+    int year;
     String strCategory;
     String strArea;
     String strInstructions;
@@ -60,6 +64,22 @@ public class PlanDTO {
     String strMeasure18;
     String strMeasure19;
     String strMeasure20;
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
 
     public int getDay() {
         return day;

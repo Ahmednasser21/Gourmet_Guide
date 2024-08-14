@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.ahmed.gourmetguide.iti.model.MealDTO;
 import com.ahmed.gourmetguide.iti.model.PlanDTO;
 
-@Database(entities = {MealDTO.class, PlanDTO.class},version = 2)
+@Database(entities = {MealDTO.class, PlanDTO.class},version = 4)
 public abstract class FavouriteMealsLocalDataSource extends RoomDatabase {
 
     private static FavouriteMealsLocalDataSource instance = null;
