@@ -99,6 +99,11 @@ public class SearchFragment extends Fragment implements OnSearchCategoryView , O
                                     fillteredList -> searchCategoryAdapter.UpdatedList(fillteredList)
                             );
                 } else if (countriesChip.isChecked()) {
+                    Observable.fromIterable(countries)
+                            .filter(item -> item.getStrArea().toLowerCase().contains(searchable.toString()))
+                            .toList().subscribe(
+                                    fillteredList -> countryListAdapter.updateCountries(fillteredList)
+                            );
 
                 } else if (ingredientsChip.isChecked()) {
                     Observable.fromIterable(ingredientListDTOS)
