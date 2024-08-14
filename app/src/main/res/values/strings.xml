@@ -60,4 +60,5 @@
     <string name="meals">Meals</string>
     <string name="delete">Delete</string>
     <string name="my_plans_recipes">My Plans Recipes</string>
+    <string name="delete_Fav">Delete</string>
 </resources>

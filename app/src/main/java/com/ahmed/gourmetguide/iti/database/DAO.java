@@ -35,7 +35,7 @@ public interface DAO {
     Completable deleteAllMeals();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    Completable insertPlanByDAy(PlanDTO plan,int day);
+    Completable insertPlanByDAy(PlanDTO plan);
 
     @Update
     Completable UpdatePlan(PlanDTO meal);
@@ -45,7 +45,7 @@ public interface DAO {
 
 
     @Query("SELECT * FROM `Plan`")
-    Flowable<List<PlanDTO>> getAllPlansByDAy(int day);
+    Flowable<List<PlanDTO>> getAllPlansByDAy();
 
     @Query("DELETE FROM `Plan`")
     Completable deleteAllPlans();

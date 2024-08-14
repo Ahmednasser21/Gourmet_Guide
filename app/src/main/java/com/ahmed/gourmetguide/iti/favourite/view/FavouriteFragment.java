@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -45,7 +46,7 @@ public class FavouriteFragment extends Fragment implements OnFavouriteView, OnDe
         favouritePresenter.getAllFavourite();
         favouriteAdapter = new FavouriteAdapter(getContext(),new ArrayList<>(),this);
         favRecycler.setAdapter(favouriteAdapter);
-        favRecycler.setLayoutManager(new GridLayoutManager(getContext(),2));
+        favRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
@@ -59,7 +60,7 @@ public class FavouriteFragment extends Fragment implements OnFavouriteView, OnDe
     public void onFavoriteViewSuccess(List<MealDTO> meals) {
             favouriteAdapter.updateData(meals);
             favRecycler.setAdapter(favouriteAdapter);
-            favRecycler.setLayoutManager(new GridLayoutManager(getContext(),2));
+            favRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 

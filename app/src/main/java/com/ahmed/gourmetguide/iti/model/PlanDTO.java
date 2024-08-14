@@ -6,20 +6,14 @@ import androidx.room.PrimaryKey;
 
 @Entity (tableName = "Plan")
 public class PlanDTO {
-    String strMeal;
-    int day;
-
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
+    public PlanDTO(int day){
         this.day = day;
     }
-
+    String strMeal;
     @PrimaryKey
     @NonNull
     String idMeal;
+    public int day;
     String strCategory;
     String strArea;
     String strInstructions;
@@ -67,7 +61,13 @@ public class PlanDTO {
     String strMeasure19;
     String strMeasure20;
 
+    public int getDay() {
+        return day;
+    }
 
+    public void setDay(int day) {
+        this.day = day;
+    }
 
     public String getStrMeasure10() {
         return strMeasure10;

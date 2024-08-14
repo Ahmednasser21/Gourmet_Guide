@@ -50,7 +50,7 @@ public class FavouritePresenter {
 
     }
     public void deleteFavourite(MealDTO meal){
-        repo.DeleteFavourite(meal).subscribe(new CompletableObserver() {
+        repo.deleteFavourite(meal).subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
 

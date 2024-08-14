@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -75,7 +76,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.View
         CardView row;
         TextView categoryName;
         ImageView categoryImage;
-        Button deleteFav;
+        ImageButton deleteFav;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

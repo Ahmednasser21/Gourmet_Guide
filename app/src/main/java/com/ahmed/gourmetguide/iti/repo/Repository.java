@@ -20,7 +20,6 @@ import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Repository {
@@ -82,7 +81,7 @@ public class Repository {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
     }
-    public Completable DeleteFavourite(MealDTO meal){
+    public Completable deleteFavourite(MealDTO meal){
         return
         favouriteMealsLocalDataSource.dao().delete(meal)
                 .subscribeOn(Schedulers.io())
@@ -102,16 +101,22 @@ public class Repository {
     }
     public Completable insertPlanByDay(PlanDTO planDTO, int day){
         return
-                favouriteMealsLocalDataSource.dao().insertPlanByDAy(planDTO,day)
+                favouriteMealsLocalDataSource.dao().insertPlanByDAy(planDTO)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
     }
-//    public Flowable<List<PlanDTO>> getAllPlansByDAy(int day){
-//        return
-//                favouriteMealsLocalDataSource.dao().getAllPlansByDAy(day)
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread());
-//    }
+    public Flowable<List<PlanDTO>> getAllPlansByDAy(){
+        return
+                favouriteMealsLocalDataSource.dao().getAllPlansByDAy()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+    }
+    public Completable deletePlan(PlanDTO plan){
+        return
+                favouriteMealsLocalDataSource.dao().deletePlan(plan)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+    }
 
 
 }
