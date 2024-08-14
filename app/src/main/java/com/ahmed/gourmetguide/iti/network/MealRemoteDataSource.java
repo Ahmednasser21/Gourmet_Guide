@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.ahmed.gourmetguide.iti.model.CategoryMealsResponse;
 import com.ahmed.gourmetguide.iti.model.CategoryResponse;
+import com.ahmed.gourmetguide.iti.model.IngredientListResponse;
+import com.ahmed.gourmetguide.iti.model.MealByIngredientResponse;
 import com.ahmed.gourmetguide.iti.model.MealResponse;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -139,5 +141,57 @@ public class MealRemoteDataSource {
 
                     }
                 });
+    }
+    public void getIngredientsList(IngredientListCallBack ingredientListCallBack){
+
+        Single<IngredientListResponse> ingredients = networkService.getIngredientList();
+        ingredients.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<IngredientListResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: Ingredients ");
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull IngredientListResponse response) {
+                        Log.i(TAG, "onSuccess: "+response);
+                       ingredientListCallBack.onIngredientListSuccessResult(response);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: ");
+                        ingredientListCallBack.onIngredientListFailureResult(e.getMessage());
+
+                    }
+                });
+
+    }
+    public void getMealByIngredient(MealByIngredientCallBack mealByIngredientCallBack,String ingredient){
+
+        Single<MealByIngredientResponse> ingredients = networkService.getMealsByIngredient(ingredient);
+        ingredients.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<MealByIngredientResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: Ingredients ");
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull MealByIngredientResponse response) {
+                        Log.i(TAG, "onSuccess: "+response);
+                        mealByIngredientCallBack.onMealByIngredientSuccessResult(response);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: ");
+                        mealByIngredientCallBack.onMealByIngredientFailureResult(e.getMessage());
+
+                    }
+                });
+
     }
 }

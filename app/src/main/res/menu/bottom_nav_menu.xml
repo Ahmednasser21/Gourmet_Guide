@@ -4,15 +4,16 @@
         android:id="@+id/home"
         android:title="@string/home"
         android:icon="@drawable/baseline_home_filled_24"/>
-    <item android:id="@+id/search"
+    <item
+        android:id="@+id/search"
         android:title="@string/search"
-        android:icon="@drawable/baseline_search_24"
-        />
-    <item android:id="@+id/favourit"
+        android:icon="@drawable/baseline_search_24"/>
+    <item
+        android:id="@+id/favourit"
         android:title="@string/favourite"
         android:icon="@drawable/baseline_favorite_24"/>
-    <item android:id="@+id/calender"
+    <item
+        android:id="@+id/calender"
         android:title="@string/calender"
         android:icon="@drawable/baseline_calendar_month_24"/>
-
 </menu>

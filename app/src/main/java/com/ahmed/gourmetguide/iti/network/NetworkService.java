@@ -2,6 +2,8 @@ package com.ahmed.gourmetguide.iti.network;
 
 import com.ahmed.gourmetguide.iti.model.CategoryMealsResponse;
 import com.ahmed.gourmetguide.iti.model.CategoryResponse;
+import com.ahmed.gourmetguide.iti.model.IngredientListResponse;
+import com.ahmed.gourmetguide.iti.model.MealByIngredientResponse;
 import com.ahmed.gourmetguide.iti.model.MealResponse;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -21,5 +23,11 @@ public interface NetworkService {
 
     @GET("lookup.php")
     Single<MealResponse>getMealById(@Query("i")String categoryName);
+
+    @GET("list.php?i=list")
+    Single<IngredientListResponse>getIngredientList();
+
+    @GET("filter.php")
+    Single<MealByIngredientResponse> getMealsByIngredient(@Query("i") String ingredient);
 }
 

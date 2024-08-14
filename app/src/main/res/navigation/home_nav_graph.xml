@@ -16,6 +16,15 @@
         <action
             android:id="@+id/action_homeFragment_to_categoryMeals"
             app:destination="@id/categoryMeals" />
+        <action
+            android:id="@+id/action_homeFragment_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_calenderFragment"
+            app:destination="@id/calenderFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealDetails"
@@ -37,5 +46,39 @@
         <argument
             android:name="categoryName"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.ahmed.gourmetguide.iti.FavouriteFragment"
+        android:label="Favourite"
+        tools:layout="@layout/fragment_favourite" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.ahmed.gourmetguide.iti.search.search_view.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_categoryMeals"
+            app:destination="@id/categoryMeals" />
+        <action
+            android:id="@+id/action_searchFragment_to_mealsByIngredientFragment"
+            app:destination="@id/mealsByIngredientFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calenderFragment"
+        android:name="com.ahmed.gourmetguide.iti.CalenderFragment"
+        android:label="Calender"
+        tools:layout="@layout/fragment_calender" />
+    <fragment
+        android:id="@+id/mealsByIngredientFragment"
+        android:name="com.ahmed.gourmetguide.iti.meal_by_ingredient.view.MealsByIngredientFragment"
+        android:label="fragment_meals_by_ingredient"
+        tools:layout="@layout/fragment_meals_by_ingredient" >
+        <argument
+            android:name="ingredient"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mealsByIngredientFragment_to_mealDetails"
+            app:destination="@id/mealDetails" />
     </fragment>
 </navigation>

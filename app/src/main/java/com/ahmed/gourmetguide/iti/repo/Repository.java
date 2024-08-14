@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.ahmed.gourmetguide.iti.network.CategoriesCallBack;
 import com.ahmed.gourmetguide.iti.network.CategoryMealsCallBack;
+import com.ahmed.gourmetguide.iti.network.IngredientListCallBack;
 import com.ahmed.gourmetguide.iti.network.MealByIdCallBack;
+import com.ahmed.gourmetguide.iti.network.MealByIngredientCallBack;
 import com.ahmed.gourmetguide.iti.network.MealRemoteDataSource;
 import com.ahmed.gourmetguide.iti.network.RandomMealCallBack;
 
@@ -39,6 +41,13 @@ public class Repository {
 
     public void getMealById(MealByIdCallBack mealByIdCallBack,String mealId){
         mealRemoteDataSource.getMealByID(mealByIdCallBack,mealId);
+    }
+
+    public void getIngredientList(IngredientListCallBack ingredientListCallBack){
+        mealRemoteDataSource.getIngredientsList(ingredientListCallBack);
+    }
+    public void getMealByIngredient (MealByIngredientCallBack mealByIngredientCallBack,String ingredient){
+        mealRemoteDataSource.getMealByIngredient(mealByIngredientCallBack,ingredient);
     }
 
 }
