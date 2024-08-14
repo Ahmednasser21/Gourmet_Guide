@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_searchFragment_to_mealsByIngredientFragment"
             app:destination="@id/mealsByIngredientFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_mealsByCountryFragment"
+            app:destination="@id/mealsByCountryFragment" />
     </fragment>
     <fragment
         android:id="@+id/calenderFragment"
@@ -80,5 +83,17 @@
         <action
             android:id="@+id/action_mealsByIngredientFragment_to_mealDetails"
             app:destination="@id/mealDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealsByCountryFragment"
+        android:name="com.ahmed.gourmetguide.iti.meals_by_country.view.MealsByCountryFragment"
+        android:label="fragment_meals_by_country"
+        tools:layout="@layout/fragment_meals_by_country" >
+        <action
+            android:id="@+id/action_mealsByCountryFragment_to_mealDetails"
+            app:destination="@id/mealDetails" />
+        <argument
+            android:name="country"
+            app:argType="string" />
     </fragment>
 </navigation>

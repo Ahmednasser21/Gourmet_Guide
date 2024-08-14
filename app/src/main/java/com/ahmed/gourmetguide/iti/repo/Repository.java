@@ -4,10 +4,12 @@ import android.content.Context;
 
 import com.ahmed.gourmetguide.iti.network.CategoriesCallBack;
 import com.ahmed.gourmetguide.iti.network.CategoryMealsCallBack;
+import com.ahmed.gourmetguide.iti.network.CountryListCallBack;
 import com.ahmed.gourmetguide.iti.network.IngredientListCallBack;
 import com.ahmed.gourmetguide.iti.network.MealByIdCallBack;
 import com.ahmed.gourmetguide.iti.network.MealByIngredientCallBack;
 import com.ahmed.gourmetguide.iti.network.MealRemoteDataSource;
+import com.ahmed.gourmetguide.iti.network.MealsByCountryCallBack;
 import com.ahmed.gourmetguide.iti.network.RandomMealCallBack;
 
 public class Repository {
@@ -48,6 +50,12 @@ public class Repository {
     }
     public void getMealByIngredient (MealByIngredientCallBack mealByIngredientCallBack,String ingredient){
         mealRemoteDataSource.getMealByIngredient(mealByIngredientCallBack,ingredient);
+    }
+    public void getCountryList(CountryListCallBack countryListCallBack){
+        mealRemoteDataSource.getCountryList(countryListCallBack);
+    }
+    public void getMealsByCountry (MealsByCountryCallBack mealsByCountryCallBack,String country){
+        mealRemoteDataSource.getMealByCountry(mealsByCountryCallBack,country);
     }
 
 }

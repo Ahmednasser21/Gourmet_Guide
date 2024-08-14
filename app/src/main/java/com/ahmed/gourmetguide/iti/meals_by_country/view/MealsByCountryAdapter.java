@@ -1,4 +1,4 @@
-package com.ahmed.gourmetguide.iti.search.search_view;
+package com.ahmed.gourmetguide.iti.meals_by_country.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,55 +14,53 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ahmed.gourmetguide.iti.R;
-import com.ahmed.gourmetguide.iti.model.IngredientListDTO;
+import com.ahmed.gourmetguide.iti.meal_by_ingredient.view.MealsByIngredientAdapter;
+import com.ahmed.gourmetguide.iti.meal_by_ingredient.view.MealsByIngredientFragmentDirections;
+import com.ahmed.gourmetguide.iti.model.MealByIngredientDTO;
+import com.ahmed.gourmetguide.iti.model.MealsByCountryDTO;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class IngredientListAdapter extends RecyclerView.Adapter <IngredientListAdapter.ViewHolder> {
-    List<IngredientListDTO> ingredients;
+public class MealsByCountryAdapter  extends RecyclerView.Adapter<MealsByCountryAdapter.ViewHolder>{
+    List<MealsByCountryDTO> meals;
     Context context;
-    private static final String URL = "https://www.themealdb.com/images/ingredients/";
-    private static final String END_POINT=".png";
-
-    public IngredientListAdapter(Context context, List<IngredientListDTO> ingredients) {
-        this.ingredients = ingredients;
+    public MealsByCountryAdapter  (Context context,List<MealsByCountryDTO> meals){
+        this.meals = meals;
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.category_meals_row, parent, false);
+        View view = inflater.inflate(R.layout.category_meals_row,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        IngredientListDTO ingredients = this.ingredients.get(position);
-        holder.categoryName.setText(ingredients.getStrIngredient());
+        MealsByCountryDTO meal =  meals.get(position);
+
+        holder.categoryName.setText(meal.getStrMeal());
+
         Glide.with(context)
-                .load(URL+ingredients.getStrIngredient()+END_POINT)
+                .load(meal.getStrMealThumb())
                 .into(holder.categoryImage);
         holder.row.setOnClickListener(v->{
-            NavDirections action = SearchFragmentDirections.actionSearchFragmentToMealsByIngredientFragment(ingredients.getStrIngredient());
+            NavDirections action = MealsByCountryFragmentDirections.actionMealsByCountryFragmentToMealDetails(meal.getIdMeal());
             Navigation.findNavController(v).navigate(action);
         });
     }
 
+
     @Override
     public int getItemCount() {
-        return ingredients.size();
+        return meals.size();
     }
 
-    void UpdatedList(List<IngredientListDTO> ingredients) {
-        this.ingredients = ingredients;
-        notifyDataSetChanged();
-    }
-
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         View layout;
         CardView row;
@@ -76,7 +74,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter <IngredientListA
             categoryName = itemView.findViewById(R.id.tv_card_meal_name_row_cm);
             categoryImage = itemView.findViewById(R.id.img_card_image_cm_row);
         }
+
     }
 }
-
 

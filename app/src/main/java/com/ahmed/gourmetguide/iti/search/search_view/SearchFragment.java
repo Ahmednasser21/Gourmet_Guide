@@ -19,6 +19,7 @@ import android.widget.SearchView;
 
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.model.CategoryDTO;
+import com.ahmed.gourmetguide.iti.model.CountryDTO;
 import com.ahmed.gourmetguide.iti.model.IngredientListDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 import com.ahmed.gourmetguide.iti.search.search_presenter.SearchPresenter;
@@ -30,7 +31,8 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class SearchFragment extends Fragment implements OnSearchCategoryView , OnIngredientListView {
+public class SearchFragment extends Fragment implements OnSearchCategoryView , OnIngredientListView
+,OnCountryListView{
 
     SearchPresenter searchPresenter;
     SearchCategoryAdapter searchCategoryAdapter;
@@ -40,13 +42,16 @@ public class SearchFragment extends Fragment implements OnSearchCategoryView , O
     RecyclerView results;
     List<CategoryDTO> categories;
     List<IngredientListDTO> ingredientListDTOS;
+    List<CountryDTO> countries;
     IngredientListAdapter ingredientListAdapter;
+    CountryListAdapter countryListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        searchPresenter = new SearchPresenter(this, this,Repository.getInstance(getContext()));
+        searchPresenter = new SearchPresenter(this, this,this,Repository.getInstance(getContext()));
         searchPresenter.getCategories();
         searchPresenter.getIngredientList();
+        searchPresenter.getCountryList();
         super.onCreate(savedInstanceState);
     }
 
@@ -65,6 +70,7 @@ public class SearchFragment extends Fragment implements OnSearchCategoryView , O
         countriesChip = view.findViewById(R.id.chip_country);
         ingredientsChip = view.findViewById(R.id.chip_ingredients);
         mealsChip = view.findViewById(R.id.chip_meals);
+        mealsChip.setVisibility(View.GONE);
         chipGroup = view.findViewById(R.id.chipGroup_search);
         results = view.findViewById(R.id.rec_categories_search_fragment);
 
@@ -72,6 +78,7 @@ public class SearchFragment extends Fragment implements OnSearchCategoryView , O
 
         searchCategoryAdapter = new SearchCategoryAdapter(getContext(), new ArrayList<>());
         ingredientListAdapter = new IngredientListAdapter(getContext(),new ArrayList<>());
+        countryListAdapter = new CountryListAdapter(new ArrayList<>());
         results.setAdapter(searchCategoryAdapter);
 
         showList();
@@ -143,13 +150,12 @@ public class SearchFragment extends Fragment implements OnSearchCategoryView , O
 
             chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
-                    if (results.getVisibility() != View.VISIBLE) {
-                        results.setVisibility(View.VISIBLE);
-                    }
 
                     if (chip == categoriesChip && results.getAdapter() != searchCategoryAdapter) {
                         results.setAdapter(searchCategoryAdapter);
+
                     } else if (chip == countriesChip) {
+                        results.setAdapter(countryListAdapter);
 
                     } else if (chip == ingredientsChip) {
                         results.setAdapter(ingredientListAdapter);
@@ -173,4 +179,14 @@ public class SearchFragment extends Fragment implements OnSearchCategoryView , O
         }
     }
 
+    @Override
+    public void onCountryListSuccess(List<CountryDTO> countries) {
+        this.countries = countries;
+        countryListAdapter.updateCountries(countries);
+    }
+
+    @Override
+    public void onCountryListFailure(String errorMsg) {
+
+    }
 }

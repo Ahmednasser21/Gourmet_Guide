@@ -4,9 +4,11 @@ import android.util.Log;
 
 import com.ahmed.gourmetguide.iti.model.CategoryMealsResponse;
 import com.ahmed.gourmetguide.iti.model.CategoryResponse;
+import com.ahmed.gourmetguide.iti.model.CountryListResponse;
 import com.ahmed.gourmetguide.iti.model.IngredientListResponse;
 import com.ahmed.gourmetguide.iti.model.MealByIngredientResponse;
 import com.ahmed.gourmetguide.iti.model.MealResponse;
+import com.ahmed.gourmetguide.iti.model.MealsByCountryResponse;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -189,6 +191,58 @@ public class MealRemoteDataSource {
                     public void onError(@NonNull Throwable e) {
                         Log.i(TAG, "onError: ");
                         mealByIngredientCallBack.onMealByIngredientFailureResult(e.getMessage());
+
+                    }
+                });
+
+    }
+    public void getCountryList(CountryListCallBack countryListCallBack){
+
+        Single<CountryListResponse> countries = networkService.getCountryList();
+        countries.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<CountryListResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: countries ");
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull CountryListResponse response) {
+                        Log.i(TAG, "onSuccess: "+response);
+                        countryListCallBack.onCountryListSuccessResult(response);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: ");
+                        countryListCallBack.onCountryListFailureResult(e.getMessage());
+
+                    }
+                });
+
+    }
+    public void getMealByCountry(MealsByCountryCallBack mealsByCountryCallBack, String country){
+
+        Single<MealsByCountryResponse> ingredients = networkService.getMealsByICountry(country);
+        ingredients.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<MealsByCountryResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: Meals ");
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull MealsByCountryResponse response) {
+                        Log.i(TAG, "onSuccess: "+response);
+                       mealsByCountryCallBack.onMealsByCSuccessResult(response);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: ");
+                        mealsByCountryCallBack.onMealsByCFailureResult(e.getMessage());
 
                     }
                 });
