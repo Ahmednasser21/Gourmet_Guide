@@ -1,5 +1,11 @@
 package com.ahmed.gourmetguide.iti.network;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+import static com.facebook.FacebookSdk.getCacheDir;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.ahmed.gourmetguide.iti.model.CategoryMealsResponse;
@@ -10,6 +16,10 @@ import com.ahmed.gourmetguide.iti.model.MealByIngredientResponse;
 import com.ahmed.gourmetguide.iti.model.MealResponse;
 import com.ahmed.gourmetguide.iti.model.MealsByCountryResponse;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
@@ -18,6 +28,12 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.Cache;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -27,14 +43,68 @@ public class MealRemoteDataSource {
     final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     NetworkService networkService;
     private static MealRemoteDataSource mealsRemoteDataSource = null;
+    Interceptor onlineInterceptor = new Interceptor() {
+        @androidx.annotation.NonNull
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Response response = chain.proceed(chain.request());
+            return response.newBuilder()
+                    .header("Cache-Control", "public, max-age=" + 60) // 1 minute
+                    .build();
+        }
+    };
+
+    Interceptor offlineInterceptor = new Interceptor() {
+        @androidx.annotation.NonNull
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            if (!isNetworkAvailable()) {
+                request = request.newBuilder()
+                        .header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
+                        .build();
+            }
+            return chain.proceed(request);
+        }
+    };
+
 
     private MealRemoteDataSource() {
+        Cache cache = new Cache(getCacheDir(), 10 * 1024 * 1024);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .cache(cache)
+                .addNetworkInterceptor(onlineInterceptor)
+                .addInterceptor(offlineInterceptor)
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         networkService = retrofit.create(NetworkService.class);
+    }
+
+    public static boolean isNetworkAvailable() {
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL("http://www.google.com");
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("User-Agent", "Test");
+            urlConnection.setRequestProperty("Connection", "close");
+            urlConnection.setConnectTimeout(1500); // Timeout in milliseconds
+            urlConnection.setReadTimeout(1500); // Optional, adds a read timeout
+            urlConnection.connect();
+            return (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK);
+        } catch (IOException e) {
+            // Log or handle the exception if needed
+            return false;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
     }
 
     public static MealRemoteDataSource getInstance() {
