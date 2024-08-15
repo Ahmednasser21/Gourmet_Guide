@@ -83,6 +83,7 @@ public class LoginFragment extends Fragment {
                         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean(getString(R.string.preferences_is_logged_in), true);
+                        editor.putBoolean(getString(R.string.preferences_is_guest), false);
                         editor.apply();
 
                         startActivity(new Intent(getActivity(), HomeActivity.class));

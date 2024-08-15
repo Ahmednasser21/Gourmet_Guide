@@ -1,17 +1,27 @@
 package com.ahmed.gourmetguide.iti.home.home_view;
+import static androidx.core.content.ContextCompat.getSystemService;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +34,9 @@ import com.ahmed.gourmetguide.iti.home.home_presenter.HomePresenter;
 import com.ahmed.gourmetguide.iti.model.CategoryDTO;
 import com.ahmed.gourmetguide.iti.model.MealDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
+import com.ahmed.gourmetguide.iti.signup_view.SignUpActivity;
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -39,8 +51,7 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
     CardView randomMealCard;
     MealDTO randomMeal;
     FirebaseUser user;
-
-
+    View rootView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +66,7 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        rootView = view;
         randomMealImg = view.findViewById(R.id.img_card_image);
         randomMealName = view.findViewById(R.id.tv_card_daily);
         homePresenter = new HomePresenter(Repository.getInstance(getContext()), this, this);
@@ -82,10 +93,15 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
             NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealDetails(randomMeal.getIdMeal());
             Navigation.findNavController(v).navigate(action);
         });
-
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
+        boolean isGuest = sharedPreferences.getBoolean(getString(R.string.preferences_is_guest), false);
         profileImage.setOnClickListener(v -> {
-            NavDirections action = HomeFragmentDirections.actionHomeFragmentToProfileFragment();
-            Navigation.findNavController(v).navigate(action);
+            if (!isGuest) {
+                NavDirections action = HomeFragmentDirections.actionHomeFragmentToProfileFragment();
+                Navigation.findNavController(v).navigate(action);
+            }else{
+                showSignInDialog();
+            }
         });
 
     }
@@ -117,5 +133,49 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
     @Override
     public void onCategoryFailure(String errorMsg) {
         Toast.makeText(getContext(), "msg category", Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!isNetworkAvailable() && rootView!=null) {
+            showNoInternetSnackbar(rootView);
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) ContextCompat.getSystemService(requireContext(),ConnectivityManager.class);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+    private void showNoInternetSnackbar(View view) {
+        Snackbar snackbar = Snackbar.make(view, "No internet connection", Snackbar.LENGTH_SHORT)
+                .setAction("Settings", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                        startActivity(intent);
+                    }
+                });
+        snackbar.show();
+    }
+    private void showSignInDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Sign In Required")
+                .setMessage("You need to sign in to continue. Would you like to sign in now?")
+                .setPositiveButton("Sign In", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        startActivity(new Intent(getContext(), SignUpActivity.class));
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 }

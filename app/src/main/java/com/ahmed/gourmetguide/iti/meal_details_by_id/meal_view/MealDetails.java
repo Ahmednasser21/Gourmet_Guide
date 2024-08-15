@@ -1,14 +1,23 @@
 package com.ahmed.gourmetguide.iti.meal_details_by_id.meal_view;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +31,14 @@ import android.widget.Toast;
 
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.calender.presenter.CalenderPresenter;
+import com.ahmed.gourmetguide.iti.home.home_view.HomeActivity;
 import com.ahmed.gourmetguide.iti.meal_details_by_id.meal_presenter.MealByIdPresenter;
 import com.ahmed.gourmetguide.iti.model.MealDTO;
 import com.ahmed.gourmetguide.iti.model.PlanDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
+import com.ahmed.gourmetguide.iti.signup_view.SignUpActivity;
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 
@@ -35,13 +47,14 @@ public class MealDetails extends Fragment implements OnMealView {
     MealByIdPresenter mealByIdPresenter;
     String mealId;
     MealDetailsAdapter mealDetailsAdapter;
-    ImageView mealImage,addFavourite , addToCalender;
+    ImageView mealImage, addFavourite, addToCalender;
     TextView mealName, mealCountry, mealInstructions;
     RecyclerView mealIngredients;
     WebView webView;
     String videoURL;
     MealDTO tempMeal;
     CalenderPresenter calenderPresenter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,36 +81,45 @@ public class MealDetails extends Fragment implements OnMealView {
         mealIngredients = view.findViewById(R.id.rec_meal_recycler);
         addFavourite = view.findViewById(R.id.add_favourite);
         webView = view.findViewById(R.id.webView);
-        addToCalender= view.findViewById(R.id.add_to_calender);
-        calenderPresenter = new CalenderPresenter(null,Repository.getInstance(getContext()));
+        addToCalender = view.findViewById(R.id.add_to_calender);
+        calenderPresenter = new CalenderPresenter(null, Repository.getInstance(getContext()));
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
+        boolean isGuest = sharedPreferences.getBoolean(getString(R.string.preferences_is_guest), false);
 
-        addFavourite.setOnClickListener(v->{
-
+        addFavourite.setOnClickListener(v -> {
+            if (!isGuest) {
                 mealByIdPresenter.insertIntoFavourite(tempMeal);
-                Toast.makeText(getContext(),"Added successfully",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_LONG).show();
+            } else {
+                showSignInDialog();
+            }
         });
-        addToCalender.setOnClickListener(v->{
-            final Calendar c = Calendar.getInstance();
+        addToCalender.setOnClickListener(v -> {
+            if (!isGuest) {
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
 
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                PlanDTO plan = new PlanDTO(dayOfMonth, monthOfYear + 1, year);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    getContext(),
-                    new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-                            PlanDTO plan = new PlanDTO(dayOfMonth,monthOfYear+1,year);
+                                calenderPresenter.insertIntoPlanByDAy(convertMealDtoToPlanDto(plan, tempMeal));
 
-                            calenderPresenter.insertIntoPlanByDAy(convertMealDtoToPlanDto(plan,tempMeal));
-
-                        }
-                    },
-                    year, month, day);
-            datePickerDialog.show();
+                            }
+                        },
+                        year, month, day);
+                datePickerDialog.show();
+            } else {
+                showSignInDialog();
+            }
         });
+
 
     }
 
@@ -129,9 +151,10 @@ public class MealDetails extends Fragment implements OnMealView {
 
     @Override
     public void onMealByIdFailure(String msg) {
-        Toast.makeText(getContext(),"Failed to get meal Details",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Failed to get meal Details", Toast.LENGTH_LONG).show();
     }
-    public PlanDTO convertMealDtoToPlanDto(PlanDTO planDto, MealDTO mealDto){
+
+    public PlanDTO convertMealDtoToPlanDto(PlanDTO planDto, MealDTO mealDto) {
         planDto.setIdMeal(mealDto.getIdMeal());
         planDto.setStrMealThumb(mealDto.getStrMealThumb());
         planDto.setStrCategory(mealDto.getStrCategory());
@@ -156,5 +179,26 @@ public class MealDetails extends Fragment implements OnMealView {
         planDto.setStrIngredient14(mealDto.getStrIngredient14());
         planDto.setStrIngredient15(mealDto.getStrIngredient15());
         return planDto;
+    }
+
+    private void showSignInDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Sign In Required")
+                .setMessage("You need to sign in to continue. Would you like to sign in now?")
+                .setPositiveButton("Sign In", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        startActivity(new Intent(getContext(), SignUpActivity.class));
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 }

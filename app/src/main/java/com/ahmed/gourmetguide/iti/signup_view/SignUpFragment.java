@@ -1,19 +1,24 @@
 package com.ahmed.gourmetguide.iti.signup_view;
 
 import static android.content.ContentValues.TAG;
-import static android.content.Context.MODE_PRIVATE;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +39,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,6 +66,8 @@ public class SignUpFragment extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInAccount account;
     CallbackManager callbackManager;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,25 +98,37 @@ public class SignUpFragment extends Fragment {
         setupFacebookLogin();
 
         googleSignUp.setOnClickListener(v -> {
-            myProgressBar.setVisibility(View.VISIBLE);
-            signIn();
+            if (isNetworkAvailable()) {
+                myProgressBar.setVisibility(View.VISIBLE);
+                signIn();
+            } else {
+                showNoInternetSnackbar(v);
+            }
         });
 
         signUpWithEmail = view.findViewById(R.id.tv_signup_email);
         signUpWithEmail.setOnClickListener(v -> {
-            NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToSignUpWithEmail();
-            Navigation.findNavController(v).navigate(action);
+            if (isNetworkAvailable()) {
+                NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToSignUpWithEmail();
+                Navigation.findNavController(v).navigate(action);
+            } else {
+                showNoInternetSnackbar(v);
+            }
         });
 
         goToLogin = view.findViewById(R.id.tv_login);
         goToLogin.setOnClickListener(v -> {
-            NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment();
-            Navigation.findNavController(v).navigate(action);
+            if (isNetworkAvailable()) {
+                NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment();
+                Navigation.findNavController(v).navigate(action);
+            } else {
+                showNoInternetSnackbar(v);
+            }
         });
         skip = view.findViewById(R.id.btn_skip);
-        skip.setOnClickListener(v->{
-            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+        skip.setOnClickListener(v -> {
+            sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
             editor.putBoolean(getString(R.string.preferences_is_guest), true);
             editor.apply();
 
@@ -129,25 +149,30 @@ public class SignUpFragment extends Fragment {
             Navigation.findNavController(rootView).navigate(action);
         } else {
             facebookSignUp.setOnClickListener(v -> {
-                LoginManager.getInstance().logInWithReadPermissions(
-                        this, Arrays.asList("public_profile", "email"));
-                LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        handleFacebookAccessToken(loginResult.getAccessToken());
-                        Toast.makeText(getActivity(), "Facebook Login Successful", Toast.LENGTH_SHORT).show();
-                    }
+                if (isNetworkAvailable()) {
+                    LoginManager.getInstance().logInWithReadPermissions(
+                            this, Arrays.asList("public_profile", "email"));
+                    LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            handleFacebookAccessToken(loginResult.getAccessToken());
+                            Toast.makeText(getActivity(), "Facebook Login Successful", Toast.LENGTH_SHORT).show();
+                            changeGuest();
+                        }
 
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(getActivity(), "Facebook Login Cancelled", Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onCancel() {
+                            Toast.makeText(getActivity(), "Facebook Login Cancelled", Toast.LENGTH_SHORT).show();
+                        }
 
-                    @Override
-                    public void onError(FacebookException exception) {
-                        Toast.makeText(getActivity(), "Facebook Login Error: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onError(FacebookException exception) {
+                            Toast.makeText(getActivity(), "Facebook Login Error: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    showNoInternetSnackbar(v);
+                }
             });
         }
     }
@@ -179,6 +204,7 @@ public class SignUpFragment extends Fragment {
                         if (task.isSuccessful()) {
                             NavDirections action = SignUpFragmentDirections.actionSignUpFragmentToOnBoardFragment();
                             Navigation.findNavController(rootView).navigate(action);
+                            changeGuest();
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(getActivity(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
@@ -189,6 +215,7 @@ public class SignUpFragment extends Fragment {
             Toast.makeText(getActivity(), "Signing Up Failed", Toast.LENGTH_LONG).show();
         }
     }
+
     private void handleFacebookAccessToken(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         FirebaseAuth.getInstance().signInWithCredential(credential)
@@ -201,6 +228,31 @@ public class SignUpFragment extends Fragment {
                         Toast.makeText(getActivity(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    void changeGuest() {
+       SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(getString(R.string.preferences_is_guest), false);
+        editor.apply();
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = ContextCompat.getSystemService(requireContext(), ConnectivityManager.class);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void showNoInternetSnackbar(View view) {
+        Snackbar snackbar = Snackbar.make(view, "No internet connection", Snackbar.LENGTH_SHORT)
+                .setAction("Settings", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                        startActivity(intent);
+                    }
+                });
+        snackbar.show();
     }
 
 }

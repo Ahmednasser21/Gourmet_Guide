@@ -43,43 +43,43 @@ public class MealRemoteDataSource {
     final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     NetworkService networkService;
     private static MealRemoteDataSource mealsRemoteDataSource = null;
-    Interceptor onlineInterceptor = new Interceptor() {
-        @androidx.annotation.NonNull
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Response response = chain.proceed(chain.request());
-            return response.newBuilder()
-                    .header("Cache-Control", "public, max-age=" + 60) // 1 minute
-                    .build();
-        }
-    };
+//    Interceptor onlineInterceptor = new Interceptor() {
+//        @androidx.annotation.NonNull
+//        @Override
+//        public Response intercept(Chain chain) throws IOException {
+//            Response response = chain.proceed(chain.request());
+//            return response.newBuilder()
+//                    .header("Cache-Control", "public, max-age=" + 60) // 1 minute
+//                    .build();
+//        }
+//    };
 
-    Interceptor offlineInterceptor = new Interceptor() {
-        @androidx.annotation.NonNull
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-            if (!isNetworkAvailable()) {
-                request = request.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
-                        .build();
-            }
-            return chain.proceed(request);
-        }
-    };
+//    Interceptor offlineInterceptor = new Interceptor() {
+//        @androidx.annotation.NonNull
+//        @Override
+//        public Response intercept(Chain chain) throws IOException {
+//            Request request = chain.request();
+//            if (!isNetworkAvailable()) {
+//                request = request.newBuilder()
+//                        .header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
+//                        .build();
+//            }
+//            return chain.proceed(request);
+//        }
+//    };
 
 
     private MealRemoteDataSource() {
-        Cache cache = new Cache(getCacheDir(), 10 * 1024 * 1024);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .cache(cache)
-                .addNetworkInterceptor(onlineInterceptor)
-                .addInterceptor(offlineInterceptor)
-                .build();
+//        Cache cache = new Cache(getCacheDir(), 10 * 1024 * 1024);
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .cache(cache)
+//                .addNetworkInterceptor(onlineInterceptor)
+//                .addInterceptor(offlineInterceptor)
+//                .build();
+//        .client(okHttpClient)
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
