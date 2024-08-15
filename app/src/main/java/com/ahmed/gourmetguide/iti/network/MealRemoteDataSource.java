@@ -86,26 +86,26 @@ public class MealRemoteDataSource {
         networkService = retrofit.create(NetworkService.class);
     }
 
-    public static boolean isNetworkAvailable() {
-        HttpURLConnection urlConnection = null;
-        try {
-            URL url = new URL("http://www.google.com");
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestProperty("User-Agent", "Test");
-            urlConnection.setRequestProperty("Connection", "close");
-            urlConnection.setConnectTimeout(1500); // Timeout in milliseconds
-            urlConnection.setReadTimeout(1500); // Optional, adds a read timeout
-            urlConnection.connect();
-            return (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK);
-        } catch (IOException e) {
-            // Log or handle the exception if needed
-            return false;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-        }
-    }
+//    public static boolean isNetworkAvailable() {
+//        HttpURLConnection urlConnection = null;
+//        try {
+//            URL url = new URL("http://www.google.com");
+//            urlConnection = (HttpURLConnection) url.openConnection();
+//            urlConnection.setRequestProperty("User-Agent", "Test");
+//            urlConnection.setRequestProperty("Connection", "close");
+//            urlConnection.setConnectTimeout(1500);
+//            urlConnection.setReadTimeout(1500);
+//            urlConnection.connect();
+//            return (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK);
+//        } catch (IOException e) {
+//
+//            return false;
+//        } finally {
+//            if (urlConnection != null) {
+//                urlConnection.disconnect();
+//            }
+//        }
+//    }
 
     public static MealRemoteDataSource getInstance() {
         if (mealsRemoteDataSource == null) {

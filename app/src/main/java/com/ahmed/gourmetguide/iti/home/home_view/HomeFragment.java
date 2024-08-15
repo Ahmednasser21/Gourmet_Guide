@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
     MealDTO randomMeal;
     FirebaseUser user;
     View rootView;
+    private static final String TAG = "HomeFragment";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,8 +119,8 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
 
     @Override
     public void onRandomMealFailure(String msg) {
-        Toast.makeText(getContext(), "msg random", Toast.LENGTH_LONG).show();
         randomMeal = new MealDTO();
+        Log.i(TAG, "onRandomMealFailure: ");
     }
 
     @Override
@@ -132,7 +134,7 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
 
     @Override
     public void onCategoryFailure(String errorMsg) {
-        Toast.makeText(getContext(), "msg category", Toast.LENGTH_LONG).show();
+        Log.i(TAG, "onCategoryFailure: ");
     }
     @Override
     public void onResume() {

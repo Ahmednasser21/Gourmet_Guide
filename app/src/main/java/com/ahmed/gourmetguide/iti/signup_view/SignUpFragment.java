@@ -4,7 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -127,13 +129,29 @@ public class SignUpFragment extends Fragment {
         });
         skip = view.findViewById(R.id.btn_skip);
         skip.setOnClickListener(v -> {
-            sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
-            editor = sharedPreferences.edit();
-            editor.putBoolean(getString(R.string.preferences_is_guest), true);
-            editor.apply();
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Guest Mode")
+                    .setMessage("You will lose many important features if you proceed as a guest. Do you want to continue?")
+                    .setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
+                            editor = sharedPreferences.edit();
+                            editor.putBoolean(getString(R.string.preferences_is_guest), true);
+                            editor.apply();
 
-            startActivity(new Intent(getActivity(), HomeActivity.class));
-            requireActivity().finish();
+                            startActivity(new Intent(getActivity(), HomeActivity.class));
+                            requireActivity().finish();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create()
+                    .show();
         });
     }
 
