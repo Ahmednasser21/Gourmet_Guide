@@ -1,6 +1,7 @@
 package com.ahmed.gourmetguide.iti.network;
 
 import static androidx.core.content.ContextCompat.getSystemService;
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.facebook.FacebookSdk.getCacheDir;
 
 import android.content.Context;
@@ -43,69 +44,55 @@ public class MealRemoteDataSource {
     final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     NetworkService networkService;
     private static MealRemoteDataSource mealsRemoteDataSource = null;
-//    Interceptor onlineInterceptor = new Interceptor() {
-//        @androidx.annotation.NonNull
-//        @Override
-//        public Response intercept(Chain chain) throws IOException {
-//            Response response = chain.proceed(chain.request());
-//            return response.newBuilder()
-//                    .header("Cache-Control", "public, max-age=" + 60) // 1 minute
-//                    .build();
-//        }
-//    };
+    Interceptor onlineInterceptor = new Interceptor() {
+        @androidx.annotation.NonNull
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Response response = chain.proceed(chain.request());
+            return response.newBuilder()
+                    .header("Cache-Control", "public, max-age=" + 30)
+                    .build();
+        }
+    };
 
-//    Interceptor offlineInterceptor = new Interceptor() {
-//        @androidx.annotation.NonNull
-//        @Override
-//        public Response intercept(Chain chain) throws IOException {
-//            Request request = chain.request();
-//            if (!isNetworkAvailable()) {
-//                request = request.newBuilder()
-//                        .header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
-//                        .build();
-//            }
-//            return chain.proceed(request);
-//        }
-//    };
+    Interceptor offlineInterceptor = new Interceptor() {
+        @androidx.annotation.NonNull
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            if (!isNetworkAvailable()) {
+                request = request.newBuilder()
+                        .header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
+                        .build();
+            }
+            return chain.proceed(request);
+        }
+    };
 
 
     private MealRemoteDataSource() {
-//        Cache cache = new Cache(getCacheDir(), 10 * 1024 * 1024);
-//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .cache(cache)
-//                .addNetworkInterceptor(onlineInterceptor)
-//                .addInterceptor(offlineInterceptor)
-//                .build();
-//        .client(okHttpClient)
+        Cache cache = new Cache(getCacheDir(), 10 * 1024 * 1024);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .cache(cache)
+                .addInterceptor(offlineInterceptor)
+                .addNetworkInterceptor(onlineInterceptor)
+                .build();
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         networkService = retrofit.create(NetworkService.class);
     }
 
-//    public static boolean isNetworkAvailable() {
-//        HttpURLConnection urlConnection = null;
-//        try {
-//            URL url = new URL("http://www.google.com");
-//            urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setRequestProperty("User-Agent", "Test");
-//            urlConnection.setRequestProperty("Connection", "close");
-//            urlConnection.setConnectTimeout(1500);
-//            urlConnection.setReadTimeout(1500);
-//            urlConnection.connect();
-//            return (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK);
-//        } catch (IOException e) {
-//
-//            return false;
-//        } finally {
-//            if (urlConnection != null) {
-//                urlConnection.disconnect();
-//            }
-//        }
-//    }
+    public static boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService((Context.CONNECTIVITY_SERVICE));
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
     public static MealRemoteDataSource getInstance() {
         if (mealsRemoteDataSource == null) {
@@ -191,7 +178,8 @@ public class MealRemoteDataSource {
                     }
                 });
     }
-    public void getMealByID(MealByIdCallBack mealByIdCallBack,String mealId) {
+
+    public void getMealByID(MealByIdCallBack mealByIdCallBack, String mealId) {
         Single<MealResponse> randomMeal = networkService.getMealById(mealId);
         randomMeal.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -214,7 +202,8 @@ public class MealRemoteDataSource {
                     }
                 });
     }
-    public void getIngredientsList(IngredientListCallBack ingredientListCallBack){
+
+    public void getIngredientsList(IngredientListCallBack ingredientListCallBack) {
 
         Single<IngredientListResponse> ingredients = networkService.getIngredientList();
         ingredients.subscribeOn(Schedulers.io())
@@ -227,8 +216,8 @@ public class MealRemoteDataSource {
 
                     @Override
                     public void onSuccess(@NonNull IngredientListResponse response) {
-                        Log.i(TAG, "onSuccess: "+response);
-                       ingredientListCallBack.onIngredientListSuccessResult(response);
+                        Log.i(TAG, "onSuccess: " + response);
+                        ingredientListCallBack.onIngredientListSuccessResult(response);
                     }
 
                     @Override
@@ -240,7 +229,8 @@ public class MealRemoteDataSource {
                 });
 
     }
-    public void getMealByIngredient(MealByIngredientCallBack mealByIngredientCallBack,String ingredient){
+
+    public void getMealByIngredient(MealByIngredientCallBack mealByIngredientCallBack, String ingredient) {
 
         Single<MealByIngredientResponse> ingredients = networkService.getMealsByIngredient(ingredient);
         ingredients.subscribeOn(Schedulers.io())
@@ -253,7 +243,7 @@ public class MealRemoteDataSource {
 
                     @Override
                     public void onSuccess(@NonNull MealByIngredientResponse response) {
-                        Log.i(TAG, "onSuccess: "+response);
+                        Log.i(TAG, "onSuccess: " + response);
                         mealByIngredientCallBack.onMealByIngredientSuccessResult(response);
                     }
 
@@ -266,7 +256,8 @@ public class MealRemoteDataSource {
                 });
 
     }
-    public void getCountryList(CountryListCallBack countryListCallBack){
+
+    public void getCountryList(CountryListCallBack countryListCallBack) {
 
         Single<CountryListResponse> countries = networkService.getCountryList();
         countries.subscribeOn(Schedulers.io())
@@ -279,7 +270,7 @@ public class MealRemoteDataSource {
 
                     @Override
                     public void onSuccess(@NonNull CountryListResponse response) {
-                        Log.i(TAG, "onSuccess: "+response);
+                        Log.i(TAG, "onSuccess: " + response);
                         countryListCallBack.onCountryListSuccessResult(response);
                     }
 
@@ -292,7 +283,8 @@ public class MealRemoteDataSource {
                 });
 
     }
-    public void getMealByCountry(MealsByCountryCallBack mealsByCountryCallBack, String country){
+
+    public void getMealByCountry(MealsByCountryCallBack mealsByCountryCallBack, String country) {
 
         Single<MealsByCountryResponse> ingredients = networkService.getMealsByICountry(country);
         ingredients.subscribeOn(Schedulers.io())
@@ -305,8 +297,8 @@ public class MealRemoteDataSource {
 
                     @Override
                     public void onSuccess(@NonNull MealsByCountryResponse response) {
-                        Log.i(TAG, "onSuccess: "+response);
-                       mealsByCountryCallBack.onMealsByCSuccessResult(response);
+                        Log.i(TAG, "onSuccess: " + response);
+                        mealsByCountryCallBack.onMealsByCSuccessResult(response);
                     }
 
                     @Override
