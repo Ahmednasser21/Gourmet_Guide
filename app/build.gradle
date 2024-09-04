@@ -39,7 +39,7 @@ dependencies {
     implementation libs.activity
     implementation libs.constraintlayout
     implementation libs.core.splashscreen
-    implementation libs.lottie
+    implementation "com.airbnb.android:lottie:5.2.0"
     implementation 'androidx.navigation:navigation-fragment:2.7.0'
     implementation 'androidx.navigation:navigation-ui:2.7.0'
     implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.7.0'

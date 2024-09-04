@@ -108,6 +108,7 @@ public class MealDetails extends Fragment implements OnMealView {
                             }
                         },
                         year, month, day);
+                datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
                 datePickerDialog.show();
             } else {
                 showSignInDialog();

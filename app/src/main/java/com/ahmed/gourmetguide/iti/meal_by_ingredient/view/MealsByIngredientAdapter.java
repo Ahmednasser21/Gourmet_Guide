@@ -55,7 +55,12 @@ public class MealsByIngredientAdapter extends RecyclerView.Adapter<MealsByIngred
 
     @Override
     public int getItemCount() {
-        return meals.size();
+        if (meals == null){
+            return 0;
+        }else{
+            return meals.size();
+        }
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
