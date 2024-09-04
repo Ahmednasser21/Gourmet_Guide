@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.profile.presenter.ProfileContract;
 import com.ahmed.gourmetguide.iti.profile.presenter.ProfilePresenter;
-import com.ahmed.gourmetguide.iti.signup_view.SignUpActivity;
+import com.ahmed.gourmetguide.iti.signup.view.SignUpActivity;
 import com.bumptech.glide.Glide;
 
 import static android.app.Activity.RESULT_OK;

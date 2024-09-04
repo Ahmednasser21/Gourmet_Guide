@@ -1,8 +1,6 @@
-package com.ahmed.gourmetguide.iti.signup_view;
+package com.ahmed.gourmetguide.iti.signup.view;
 
 import static android.content.ContentValues.TAG;
-
-import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.app.AlertDialog;
 import android.content.Context;

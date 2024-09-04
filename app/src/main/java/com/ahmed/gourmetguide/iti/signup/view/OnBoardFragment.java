@@ -1,4 +1,4 @@
-package com.ahmed.gourmetguide.iti.signup_view;
+package com.ahmed.gourmetguide.iti.signup.view;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -10,8 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;

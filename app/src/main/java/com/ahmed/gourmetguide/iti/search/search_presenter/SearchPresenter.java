@@ -7,15 +7,19 @@ import android.util.Log;
 import com.ahmed.gourmetguide.iti.model.CategoryResponse;
 import com.ahmed.gourmetguide.iti.model.CountryListResponse;
 import com.ahmed.gourmetguide.iti.model.IngredientListResponse;
-import com.ahmed.gourmetguide.iti.network.CategoriesCallBack;
-import com.ahmed.gourmetguide.iti.network.CountryListCallBack;
-import com.ahmed.gourmetguide.iti.network.IngredientListCallBack;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 import com.ahmed.gourmetguide.iti.search.search_view.OnCountryListView;
 import com.ahmed.gourmetguide.iti.search.search_view.OnIngredientListView;
 import com.ahmed.gourmetguide.iti.search.search_view.OnSearchCategoryView;
 
-public class SearchPresenter implements CategoriesCallBack, IngredientListCallBack , CountryListCallBack {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class SearchPresenter{
 
     Repository repo;
     OnSearchCategoryView onSearchCategoryView;
@@ -31,44 +35,79 @@ public class SearchPresenter implements CategoriesCallBack, IngredientListCallBa
     }
 
     public void getCategories(){
-        repo.getCategory(this);
+        repo.getCategory().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CategoryResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.i(TAG, "onSubscribe: categories");
+                    }
+
+                    @Override
+                    public void onNext(CategoryResponse response) {
+                        if (response != null && response.categories != null) {
+                            onSearchCategoryView.onSearchCategorySuccess(response.getCategories());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        onSearchCategoryView.onSearchCategoryFailure(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
-    @Override
-    public void onCategoriesSuccessResult(CategoryResponse categoryResponse) {
-        onSearchCategoryView.onSearchCategorySuccess(categoryResponse.categories);
-    }
-
-    @Override
-    public void onCategoriesFailureResult(String errMsg) {
-        onSearchCategoryView.onSearchCategoryFailure(errMsg);
-    }
     public void getIngredientList(){
-        repo.getIngredientList(this);}
+        repo.getIngredientList().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<IngredientListResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: Ingredients ");
+                    }
 
-    @Override
-    public void onIngredientListSuccessResult(IngredientListResponse ingredientListResponse) {
+                    @Override
+                    public void onSuccess(@NonNull IngredientListResponse response) {
+                        Log.i(TAG, "onSuccess: " + response);
+                        onIngredientListView.onIngredientListSuccess(response.getIngredients());
+                    }
 
-        onIngredientListView.onIngredientListSuccess(ingredientListResponse.getIngredients());
-        Log.i(TAG, "onIngredientListSuccessResult: ");
-    }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: ");
+                        onIngredientListView.onIngredientListFailure(e.getMessage());
 
-    @Override
-    public void onIngredientListFailureResult(String errMsg) {
-        onIngredientListView.onIngredientListFailure(errMsg);
+                    }
+                });
+        ;
     }
 
     public void getCountryList(){
-        repo.getCountryList(this);
+        repo.getCountryList().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<CountryListResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: countries ");
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull CountryListResponse response) {
+                        Log.i(TAG, "onSuccess: " + response);
+                        onCountryListView.onCountryListSuccess(response.getCountries());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: ");
+                        onCountryListView.onCountryListFailure(e.getMessage());
+
+                    }
+                });;
     }
 
-    @Override
-    public void onCountryListSuccessResult(CountryListResponse countries) {
-        onCountryListView.onCountryListSuccess(countries.getCountries());
-    }
-
-    @Override
-    public void onCountryListFailureResult(String errMsg) {
-        onCountryListView.onCountryListFailure(errMsg);
-    }
 }

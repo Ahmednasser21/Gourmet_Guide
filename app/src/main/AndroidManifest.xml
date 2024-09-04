@@ -39,7 +39,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".signup_view.SignUpActivity"
+            android:name=".signup.view.SignUpActivity"
             android:exported="false" />
         <activity
             android:name="com.facebook.FacebookActivity"

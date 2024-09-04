@@ -6,7 +6,7 @@
     app:startDestination="@id/signUpFragment">
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.ahmed.gourmetguide.iti.signup_view.SignUpFragment"
+        android:name="com.ahmed.gourmetguide.iti.signup.view.SignUpFragment"
         android:label="Sign Up" >
         <action
             android:id="@+id/action_signUpFragment_to_signUpWithEmail"
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpWithEmail"
-        android:name="com.ahmed.gourmetguide.iti.signup_view.SignUpWithEmail"
+        android:name="com.ahmed.gourmetguide.iti.signup.view.SignUpWithEmail"
         android:label="E-Mail SignUp"
         tools:layout="@layout/fragment_sign_up_with_email" >
         <action
@@ -32,12 +32,12 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.ahmed.gourmetguide.iti.signup_view.LoginFragment"
+        android:name="com.ahmed.gourmetguide.iti.signup.view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/onBoardFragment"
-        android:name="com.ahmed.gourmetguide.iti.signup_view.OnBoardFragment"
+        android:name="com.ahmed.gourmetguide.iti.signup.view.OnBoardFragment"
         android:label="fragment_on_board"
         tools:layout="@layout/fragment_on_board" >
         <action

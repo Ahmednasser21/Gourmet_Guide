@@ -1,29 +1,48 @@
 package com.ahmed.gourmetguide.iti.meals_by_country.presenter;
 
+import android.util.Log;
+
 import com.ahmed.gourmetguide.iti.meals_by_country.view.OnMealsByCountryView;
 import com.ahmed.gourmetguide.iti.model.MealsByCountryResponse;
-import com.ahmed.gourmetguide.iti.network.MealsByCountryCallBack;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
-public class MealsByCountryPresenter implements MealsByCountryCallBack {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class MealsByCountryPresenter {
     Repository repo;
     OnMealsByCountryView onMealsByCountryView;
+    private static final String TAG = "MealsByCountryPresenter";
 
     public MealsByCountryPresenter(OnMealsByCountryView onMealsByCountryView, Repository repo) {
         this.onMealsByCountryView = onMealsByCountryView;
         this.repo = repo;
     }
     public void getMealsByCountry(String country){
-        repo.getMealsByCountry(this,country);
+        repo.getMealsByCountry(country).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<MealsByCountryResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: Meals ");
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull MealsByCountryResponse response) {
+                        Log.i(TAG, "onSuccess: " + response);
+                        onMealsByCountryView.onMealByCountrySuccess(response.getMeals());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: ");
+                        onMealsByCountryView.onMealByCountryFailure(e.getMessage());
+
+                    }
+                });;
     }
 
-    @Override
-    public void onMealsByCSuccessResult(MealsByCountryResponse mealsByCountryResponse) {
-        onMealsByCountryView.onMealByCountrySuccess(mealsByCountryResponse.getMeals());
-    }
-
-    @Override
-    public void onMealsByCFailureResult(String errMsg) {
-        onMealsByCountryView.onMealByCountryFailure(errMsg);
-    }
 }

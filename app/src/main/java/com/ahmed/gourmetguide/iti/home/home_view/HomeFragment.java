@@ -1,5 +1,4 @@
 package com.ahmed.gourmetguide.iti.home.home_view;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -28,14 +27,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.home.home_presenter.HomePresenter;
 import com.ahmed.gourmetguide.iti.model.CategoryDTO;
 import com.ahmed.gourmetguide.iti.model.MealDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
-import com.ahmed.gourmetguide.iti.signup_view.SignUpActivity;
+import com.ahmed.gourmetguide.iti.signup.view.SignUpActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;

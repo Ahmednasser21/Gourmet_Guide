@@ -1,6 +1,5 @@
 package com.ahmed.gourmetguide.iti.network;
 
-import static androidx.core.content.ContextCompat.getSystemService;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.facebook.FacebookSdk.getCacheDir;
 
@@ -18,8 +17,6 @@ import com.ahmed.gourmetguide.iti.model.MealResponse;
 import com.ahmed.gourmetguide.iti.model.MealsByCountryResponse;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -101,213 +98,40 @@ public class MealRemoteDataSource {
         return mealsRemoteDataSource;
     }
 
-    public void getRandomMeal(RandomMealCallBack randomMealCallBack) {
-        Single<MealResponse> randomMeal = networkService.getRandomMeal();
-        randomMeal.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MealResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: Random meal ");
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull MealResponse mealResponse) {
-                        randomMealCallBack.onRMSuccessResult(mealResponse);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                        randomMealCallBack.onRMFailureResult(e.getMessage());
-
-                    }
-                });
+    public Single<MealResponse> getRandomMeal() {
+        return networkService.getRandomMeal();
     }
 
-    public void getCategories(CategoriesCallBack categoriesCallBack) {
-        Observable<CategoryResponse> category = networkService.getCategories();
-        category.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CategoryResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.i(TAG, "onSubscribe: categories");
-                    }
-
-                    @Override
-                    public void onNext(CategoryResponse response) {
-                        if (response != null && response.categories != null) {
-                            categoriesCallBack.onCategoriesSuccessResult(response);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        categoriesCallBack.onCategoriesFailureResult(e.getMessage());
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-
+    public Observable<CategoryResponse> getCategories() {
+        return networkService.getCategories();
     }
 
-    public void getCategoryMeals(CategoryMealsCallBack categoryMealsCallBack, String categoryName) {
-        Single<CategoryMealsResponse> categoryMeals = networkService.getCategoryMeals(categoryName);
-        categoryMeals.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<CategoryMealsResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: Random meal ");
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull CategoryMealsResponse categoryMealsResponse) {
-                        categoryMealsCallBack.onCategoryMealsSuccessResult(categoryMealsResponse);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                        categoryMealsCallBack.onCategoryMealsFailureResult(e.getMessage());
-
-                    }
-                });
+    public Single<CategoryMealsResponse> getCategoryMeals(String categoryName) {
+        return networkService.getCategoryMeals(categoryName);
     }
 
-    public void getMealByID(MealByIdCallBack mealByIdCallBack, String mealId) {
-        Single<MealResponse> randomMeal = networkService.getMealById(mealId);
-        randomMeal.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MealResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: Random meal ");
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull MealResponse mealResponse) {
-                        mealByIdCallBack.onMealByIdSuccessResult(mealResponse);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                        mealByIdCallBack.onMealByIdFailureResult(e.getMessage());
-
-                    }
-                });
+    public Single<MealResponse> getMealByID(String mealId) {
+        return networkService.getMealById(mealId);
     }
 
-    public void getIngredientsList(IngredientListCallBack ingredientListCallBack) {
+    public Single<IngredientListResponse> getIngredientsList() {
 
-        Single<IngredientListResponse> ingredients = networkService.getIngredientList();
-        ingredients.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<IngredientListResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: Ingredients ");
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull IngredientListResponse response) {
-                        Log.i(TAG, "onSuccess: " + response);
-                        ingredientListCallBack.onIngredientListSuccessResult(response);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.i(TAG, "onError: ");
-                        ingredientListCallBack.onIngredientListFailureResult(e.getMessage());
-
-                    }
-                });
-
+        return networkService.getIngredientList();
     }
 
-    public void getMealByIngredient(MealByIngredientCallBack mealByIngredientCallBack, String ingredient) {
+    public Single<MealByIngredientResponse> getMealByIngredient(String ingredient) {
 
-        Single<MealByIngredientResponse> ingredients = networkService.getMealsByIngredient(ingredient);
-        ingredients.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MealByIngredientResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: Ingredients ");
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull MealByIngredientResponse response) {
-                        Log.i(TAG, "onSuccess: " + response);
-                        mealByIngredientCallBack.onMealByIngredientSuccessResult(response);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.i(TAG, "onError: ");
-                        mealByIngredientCallBack.onMealByIngredientFailureResult(e.getMessage());
-
-                    }
-                });
-
+        return networkService.getMealsByIngredient(ingredient);
     }
 
-    public void getCountryList(CountryListCallBack countryListCallBack) {
+    public Single<CountryListResponse> getCountryList() {
 
-        Single<CountryListResponse> countries = networkService.getCountryList();
-        countries.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<CountryListResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: countries ");
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull CountryListResponse response) {
-                        Log.i(TAG, "onSuccess: " + response);
-                        countryListCallBack.onCountryListSuccessResult(response);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.i(TAG, "onError: ");
-                        countryListCallBack.onCountryListFailureResult(e.getMessage());
-
-                    }
-                });
-
+        return networkService.getCountryList();
     }
 
-    public void getMealByCountry(MealsByCountryCallBack mealsByCountryCallBack, String country) {
+    public Single<MealsByCountryResponse> getMealByCountry(String country) {
 
-        Single<MealsByCountryResponse> ingredients = networkService.getMealsByICountry(country);
-        ingredients.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MealsByCountryResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: Meals ");
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull MealsByCountryResponse response) {
-                        Log.i(TAG, "onSuccess: " + response);
-                        mealsByCountryCallBack.onMealsByCSuccessResult(response);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.i(TAG, "onError: ");
-                        mealsByCountryCallBack.onMealsByCFailureResult(e.getMessage());
-
-                    }
-                });
+        return networkService.getMealsByICountry(country);
 
     }
 }

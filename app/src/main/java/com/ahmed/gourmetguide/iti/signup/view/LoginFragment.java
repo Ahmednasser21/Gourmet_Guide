@@ -1,4 +1,4 @@
-package com.ahmed.gourmetguide.iti.signup_view;
+package com.ahmed.gourmetguide.iti.signup.view;
 
 import static android.content.Context.MODE_PRIVATE;
 

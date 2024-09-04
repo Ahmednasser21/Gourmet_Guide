@@ -1,19 +1,27 @@
 package com.ahmed.gourmetguide.iti.home.home_presenter;
 
 
+import android.util.Log;
+
 import com.ahmed.gourmetguide.iti.home.home_view.OnCategoryView;
 import com.ahmed.gourmetguide.iti.home.home_view.OnRandomMealView;
-import com.ahmed.gourmetguide.iti.network.CategoriesCallBack;
 import com.ahmed.gourmetguide.iti.model.CategoryResponse;
 import com.ahmed.gourmetguide.iti.model.MealResponse;
-import com.ahmed.gourmetguide.iti.network.RandomMealCallBack;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
-public class HomePresenter implements RandomMealCallBack, CategoriesCallBack {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class HomePresenter {
 
     Repository repo;
     OnRandomMealView onRandomMealView;
     OnCategoryView onCategoryView;
+    private static final String TAG = "HomePresenter";
     public HomePresenter(Repository repo,OnRandomMealView onRandomMealView,
                          OnCategoryView onCategoryView){
         this.repo =repo;
@@ -21,31 +29,53 @@ public class HomePresenter implements RandomMealCallBack, CategoriesCallBack {
         this.onCategoryView = onCategoryView;
     }
     public void getRandomMeal(){
-        repo.getRandomMeal(this);
-    }
+        repo.getRandomMeal().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<MealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: Random meal ");
+                    }
 
-    @Override
-    public void onRMSuccessResult(MealResponse mealResponse) {
-        onRandomMealView.onRandomMealSuccess(mealResponse.getMeals().get(0));
-    }
+                    @Override
+                    public void onSuccess(@NonNull MealResponse mealResponse) {
+                        onRandomMealView.onRandomMealSuccess(mealResponse.getMeals().get(0));
+                    }
 
-    @Override
-    public void onRMFailureResult(String errMsg) {
-        onRandomMealView.onRandomMealFailure(errMsg);
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                       onRandomMealView.onRandomMealFailure(e.getMessage());
+
+                    }
+                });
     }
 
     public void getCategories(){
-        repo.getCategory(this);
-    }
+        repo.getCategory().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CategoryResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.i(TAG, "onSubscribe: categories");
+                    }
 
-    @Override
-    public void onCategoriesSuccessResult(CategoryResponse categoryResponse) {
-        onCategoryView.onCategorySuccess(categoryResponse.getCategories());
-    }
+                    @Override
+                    public void onNext(CategoryResponse response) {
+                        if (response != null && response.categories != null) {
+                            onCategoryView.onCategorySuccess(response.getCategories());
+                        }
+                    }
 
-    @Override
-    public void onCategoriesFailureResult(String errMsg) {
-        onCategoryView.onCategoryFailure(errMsg);
+                    @Override
+                    public void onError(Throwable e) {
+                        onCategoryView.onCategoryFailure(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });;
     }
 
 

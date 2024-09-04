@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/white"
-    tools:context=".signup_view.SignUpActivity">
+    tools:context=".signup.view.SignUpActivity">
 
 
     <fragment

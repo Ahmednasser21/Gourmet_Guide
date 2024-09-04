@@ -6,7 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.ahmed.gourmetguide.iti.signup_view.SignUpActivity;
+import com.ahmed.gourmetguide.iti.signup.view.SignUpActivity;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 

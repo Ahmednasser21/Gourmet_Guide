@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signup_view.SignUpWithEmail">
+    tools:context=".signup.view.SignUpWithEmail">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

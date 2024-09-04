@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@drawable/sign_up_background"
-    tools:context=".signup_view.SignUpActivity">
+    tools:context=".signup.view.SignUpActivity">
 
     <TextView
         android:id="@+id/textView3"

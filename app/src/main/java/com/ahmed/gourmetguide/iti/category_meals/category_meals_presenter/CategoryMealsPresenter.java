@@ -1,13 +1,21 @@
 package com.ahmed.gourmetguide.iti.category_meals.category_meals_presenter;
 
+import android.util.Log;
+
 import com.ahmed.gourmetguide.iti.category_meals.category_meals_view.OnCategoryMealsView;
 import com.ahmed.gourmetguide.iti.model.CategoryMealsResponse;
-import com.ahmed.gourmetguide.iti.network.CategoryMealsCallBack;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
-public class CategoryMealsPresenter implements CategoryMealsCallBack {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class CategoryMealsPresenter  {
     Repository repo;
     OnCategoryMealsView onCategoryMealsView;
+    private static final String TAG = "CategoryMealsPresenter";
 
     public CategoryMealsPresenter(OnCategoryMealsView onCategoryMealsView, Repository repo) {
         this.onCategoryMealsView = onCategoryMealsView;
@@ -15,17 +23,25 @@ public class CategoryMealsPresenter implements CategoryMealsCallBack {
     }
 
     public void getCategoryMeals(String categoryName){
-        repo.getCategoryMeals(this,categoryName);
-    }
+        repo.getCategoryMeals(categoryName).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<CategoryMealsResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: Random meal ");
+                    }
 
+                    @Override
+                    public void onSuccess(@NonNull CategoryMealsResponse categoryMealsResponse) {
+                        onCategoryMealsView.onCategoryMealsSuccess(categoryMealsResponse.getMeals());
+                    }
 
-    @Override
-    public void onCategoryMealsSuccessResult(CategoryMealsResponse categoryMealsResponse) {
-        onCategoryMealsView.onCategoryMealsSuccess(categoryMealsResponse.getMeals());
-    }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
 
-    @Override
-    public void onCategoryMealsFailureResult(String errMsg) {
-        onCategoryMealsView.onCategoryMealsFailure(errMsg);
+                        onCategoryMealsView.onCategoryMealsFailure(e.getMessage());
+
+                    }
+                });;
     }
 }

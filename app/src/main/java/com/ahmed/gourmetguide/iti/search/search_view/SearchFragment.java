@@ -28,8 +28,12 @@ import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SearchFragment extends Fragment implements OnSearchCategoryView , OnIngredientListView
 ,OnCountryListView{
@@ -82,7 +86,7 @@ public class SearchFragment extends Fragment implements OnSearchCategoryView , O
         results.setAdapter(searchCategoryAdapter);
 
         showList();
-        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+       searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener()  {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -93,20 +97,18 @@ public class SearchFragment extends Fragment implements OnSearchCategoryView , O
             public boolean onQueryTextChange(String searchable) {
 
                 if (categoriesChip.isChecked()) {
-                    Observable.fromIterable(categories)
-                            .filter(item -> item.getStrCategory().toLowerCase().contains(searchable.toString()))
-                            .toList().subscribe(
-                                    fillteredList -> searchCategoryAdapter.UpdatedList(fillteredList)
-                            );
+                    Flowable.fromIterable(categories)
+                            .filter(it -> it.getStrCategory().toLowerCase().contains(searchable.toString()))
+                            .toList()
+                            .subscribe(fillteredList -> searchCategoryAdapter.UpdatedList(fillteredList));
                 } else if (countriesChip.isChecked()) {
-                    Observable.fromIterable(countries)
+                    Flowable.fromIterable(countries)
                             .filter(item -> item.getStrArea().toLowerCase().contains(searchable.toString()))
                             .toList().subscribe(
-                                    fillteredList -> countryListAdapter.updateCountries(fillteredList)
-                            );
+                                    fillteredList -> countryListAdapter.updateCountries(fillteredList));
 
                 } else if (ingredientsChip.isChecked()) {
-                    Observable.fromIterable(ingredientListDTOS)
+                    Flowable.fromIterable(ingredientListDTOS)
                             .filter(item -> item.getStrIngredient().toLowerCase().contains(searchable.toString()))
                             .toList().subscribe(
                                     fillteredList -> ingredientListAdapter.UpdatedList(fillteredList)
@@ -158,12 +160,14 @@ public class SearchFragment extends Fragment implements OnSearchCategoryView , O
 
                     if (chip == categoriesChip && results.getAdapter() != searchCategoryAdapter) {
                         results.setAdapter(searchCategoryAdapter);
-
+                        searchCategoryAdapter.UpdatedList(categories);
                     } else if (chip == countriesChip) {
                         results.setAdapter(countryListAdapter);
+                        countryListAdapter.updateCountries(countries);
 
                     } else if (chip == ingredientsChip) {
                         results.setAdapter(ingredientListAdapter);
+                        ingredientListAdapter.UpdatedList(ingredientListDTOS);
 
                     } else if (chip == mealsChip) {
                     }
