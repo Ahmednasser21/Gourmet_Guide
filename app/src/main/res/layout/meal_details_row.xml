@@ -6,15 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.33"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_ingredient"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_ingredient_measure"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -23,21 +31,21 @@
         android:id="@+id/tv_ingredient_measure"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:text="TextView"
+        android:textAlignment="center"
         android:textColor="@color/primary_color"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/img_ingredient"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
-        app:layout_constraintStart_toEndOf="@+id/img_ingredient"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="@+id/img_ingredient" />
 
     <TextView
         android:id="@+id/tv_ingredient_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:text="TextView"
+        android:textAlignment="center"
         android:textColor="@color/primary_color"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_ingredient_measure"
@@ -51,6 +59,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="194dp"
+        app:layout_constraintGuide_percent="0.66"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
