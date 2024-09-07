@@ -49,16 +49,14 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroup_search"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:chipSpacingHorizontal="12dp"
+        app:chipSpacingHorizontal="30dp"
+        app:chipSpacingVertical="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_search_bar"
-        app:singleLine="false"
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
@@ -66,31 +64,40 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="140dp"
+            android:textAlignment="center"
             android:text="@string/categories"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_country"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="140dp"
             android:text="@string/country"
-            android:textSize="16sp" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_ingredients"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="140dp"
+            android:textAlignment="center"
             android:text="@string/ingredients"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_meals"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/meals" />
+            android:minWidth="140dp"
+            android:text="@string/meals"
+            android:textAlignment="center"
+            android:textSize="18sp" />
     </com.google.android.material.chip.ChipGroup>
 
     <androidx.constraintlayout.widget.Guideline

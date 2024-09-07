@@ -5,6 +5,7 @@ import com.ahmed.gourmetguide.iti.model.remote.CategoryResponse;
 import com.ahmed.gourmetguide.iti.model.remote.CountryListResponse;
 import com.ahmed.gourmetguide.iti.model.remote.IngredientListResponse;
 import com.ahmed.gourmetguide.iti.model.remote.MealByIngredientResponse;
+import com.ahmed.gourmetguide.iti.model.remote.MealDTO;
 import com.ahmed.gourmetguide.iti.model.remote.MealResponse;
 import com.ahmed.gourmetguide.iti.model.remote.MealsByCountryResponse;
 
@@ -37,6 +38,9 @@ public interface NetworkService {
 
     @GET("filter.php")
     Single<MealsByCountryResponse> getMealsByICountry(@Query("a") String area);
+    @GET("search.php")
+    Single<MealResponse> SearchMealByName(@Query("s")String mealName);
+
 
 }
 

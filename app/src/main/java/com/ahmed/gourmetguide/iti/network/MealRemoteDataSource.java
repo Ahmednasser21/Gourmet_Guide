@@ -126,4 +126,7 @@ public class MealRemoteDataSource {
         return networkService.getMealsByICountry(country);
 
     }
+    public Single<MealResponse>searchMealByName(String mealName){
+        return networkService.SearchMealByName(mealName);
+    }
 }

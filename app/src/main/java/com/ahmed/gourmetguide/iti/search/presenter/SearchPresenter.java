@@ -7,10 +7,12 @@ import android.util.Log;
 import com.ahmed.gourmetguide.iti.model.remote.CategoryResponse;
 import com.ahmed.gourmetguide.iti.model.remote.CountryListResponse;
 import com.ahmed.gourmetguide.iti.model.remote.IngredientListResponse;
+import com.ahmed.gourmetguide.iti.model.remote.MealResponse;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 import com.ahmed.gourmetguide.iti.search.view.OnCountryListView;
 import com.ahmed.gourmetguide.iti.search.view.OnIngredientListView;
 import com.ahmed.gourmetguide.iti.search.view.OnSearchCategoryView;
+import com.ahmed.gourmetguide.iti.search.view.OnSearchMealsByNameView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -25,12 +27,14 @@ public class SearchPresenter{
     OnSearchCategoryView onSearchCategoryView;
     OnIngredientListView onIngredientListView;
     OnCountryListView onCountryListView;
+    OnSearchMealsByNameView onSearchMealsByNameView;
 
     public SearchPresenter(OnSearchCategoryView onSearchCategoryView,OnIngredientListView onIngredientListView,
-                           OnCountryListView onCountryListView,Repository repo) {
+                           OnCountryListView onCountryListView,OnSearchMealsByNameView onSearchMealsByNameView,Repository repo) {
         this.onSearchCategoryView = onSearchCategoryView;
         this.onIngredientListView = onIngredientListView;
         this.onCountryListView = onCountryListView;
+        this.onSearchMealsByNameView = onSearchMealsByNameView;
         this.repo = repo;
     }
 
@@ -108,6 +112,28 @@ public class SearchPresenter{
 
                     }
                 });;
+    }
+    public void searchMealByName(String mealName){
+        repo.searchMealByName(mealName).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<MealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull MealResponse mealResponse) {
+                        Log.i(TAG, "onSuccess: searchByMeal");
+                        onSearchMealsByNameView.OnSearchMealsByNamSuccess(mealResponse.getMeals());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: searchByMeal");
+                        onSearchMealsByNameView.OnSearchMealsByNameViewFailure(e.getMessage());
+                    }
+                });
     }
 
 }

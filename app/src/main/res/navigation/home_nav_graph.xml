@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_searchFragment_to_mealsByCountryFragment"
             app:destination="@id/mealsByCountryFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_mealDetails"
+            app:destination="@id/mealDetails" />
     </fragment>
     <fragment
         android:id="@+id/calenderFragment"

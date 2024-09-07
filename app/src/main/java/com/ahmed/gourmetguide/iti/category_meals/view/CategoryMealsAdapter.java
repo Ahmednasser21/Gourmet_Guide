@@ -33,7 +33,7 @@ public class CategoryMealsAdapter extends RecyclerView.Adapter<CategoryMealsAdap
     @Override
     public ViweHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.category_meals_row,parent,false);
+        View view = layoutInflater.inflate(R.layout.public_row_for_search,parent,false);
         return new ViweHolder(view);
     }
 
