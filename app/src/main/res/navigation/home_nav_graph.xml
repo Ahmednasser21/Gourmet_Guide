@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ahmed.gourmetguide.iti.home.home_view.HomeFragment"
+        android:name="com.ahmed.gourmetguide.iti.home.view.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetails"
-        android:name="com.ahmed.gourmetguide.iti.meal_details_by_id.meal_view.MealDetails"
+        android:name="com.ahmed.gourmetguide.iti.meal_details_by_id.view.MealDetailsFragment"
         android:label="Meal Details"
         tools:layout="@layout/fragment_meal_details">
         <argument
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoryMeals"
-        android:name="com.ahmed.gourmetguide.iti.category_meals.category_meals_view.CategoryMeals"
+        android:name="com.ahmed.gourmetguide.iti.category_meals.view.CategoryMealsFragment"
         android:label="Category Meals"
         tools:layout="@layout/fragment_category_meals">
         <action
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.ahmed.gourmetguide.iti.search.search_view.SearchFragment"
+        android:name="com.ahmed.gourmetguide.iti.search.view.SearchFragment"
         android:label="Search"
         tools:layout="@layout/fragment_search" >
         <action

@@ -3,20 +3,21 @@ package com.ahmed.gourmetguide.iti.profile.presenter;
 
 import android.net.Uri;
 
+import com.ahmed.gourmetguide.iti.profile.view.ProfileView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class ProfilePresenter implements ProfileContract.Presenter {
-    private ProfileContract.View view;
+public class ProfilePresenter {
+    private ProfileView view;
     private FirebaseAuth firebaseAuth;
 
-    public ProfilePresenter(ProfileContract.View view) {
+    public ProfilePresenter(ProfileView view) {
         this.view = view;
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    @Override
+
     public void loadUserInfo() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
@@ -30,7 +31,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         }
     }
 
-    @Override
+
     public void signOut() {
         view.showSignOutAlert();  // Show an alert before signing out
     }
@@ -40,7 +41,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         view.onSignOutSuccess();
     }
 
-    @Override
+
     public void changePassword(String newPassword) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
@@ -54,7 +55,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         }
     }
 
-    @Override
+
     public void updateProfilePicture(String imageUrl) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {

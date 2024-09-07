@@ -3,7 +3,7 @@ package com.ahmed.gourmetguide.iti.meals_by_country.presenter;
 import android.util.Log;
 
 import com.ahmed.gourmetguide.iti.meals_by_country.view.OnMealsByCountryView;
-import com.ahmed.gourmetguide.iti.model.MealsByCountryResponse;
+import com.ahmed.gourmetguide.iti.model.remote.MealsByCountryResponse;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

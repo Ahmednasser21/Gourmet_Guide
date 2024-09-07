@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahmed.gourmetguide.iti.R;
-import com.ahmed.gourmetguide.iti.profile.presenter.ProfileContract;
 import com.ahmed.gourmetguide.iti.profile.presenter.ProfilePresenter;
 import com.ahmed.gourmetguide.iti.signup.view.SignUpActivity;
 import com.bumptech.glide.Glide;
@@ -30,7 +29,7 @@ import com.bumptech.glide.Glide;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
-public class ProfileFragment extends Fragment implements ProfileContract.View {
+public class ProfileFragment extends Fragment implements ProfileView {
 
     private static final int PICK_IMAGE = 100;
     private ProfilePresenter presenter;

@@ -1,27 +1,22 @@
 package com.ahmed.gourmetguide.iti.repo;
 
 import android.content.Context;
-
 import com.ahmed.gourmetguide.iti.database.MealsLocalDataSource;
-import com.ahmed.gourmetguide.iti.model.CategoryMealsResponse;
-import com.ahmed.gourmetguide.iti.model.CategoryResponse;
-import com.ahmed.gourmetguide.iti.model.CountryListResponse;
-import com.ahmed.gourmetguide.iti.model.IngredientListResponse;
-import com.ahmed.gourmetguide.iti.model.MealByIngredientResponse;
-import com.ahmed.gourmetguide.iti.model.MealDTO;
-import com.ahmed.gourmetguide.iti.model.MealResponse;
-import com.ahmed.gourmetguide.iti.model.MealsByCountryResponse;
-import com.ahmed.gourmetguide.iti.model.PlanDTO;
+import com.ahmed.gourmetguide.iti.model.remote.CategoryMealsResponse;
+import com.ahmed.gourmetguide.iti.model.remote.CategoryResponse;
+import com.ahmed.gourmetguide.iti.model.remote.CountryListResponse;
+import com.ahmed.gourmetguide.iti.model.remote.IngredientListResponse;
+import com.ahmed.gourmetguide.iti.model.local.LocalMealDTO;
+import com.ahmed.gourmetguide.iti.model.remote.MealByIngredientResponse;
+import com.ahmed.gourmetguide.iti.model.remote.MealResponse;
+import com.ahmed.gourmetguide.iti.model.remote.MealsByCountryResponse;
+import com.ahmed.gourmetguide.iti.model.local.PlanDTO;
 import com.ahmed.gourmetguide.iti.network.MealRemoteDataSource;
-
 import java.util.List;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Repository {
 
@@ -74,61 +69,35 @@ public class Repository {
         return mealRemoteDataSource.getMealByCountry( country);
     }
 
-    public Completable insertIntoFavourite(MealDTO meal) {
-        return
-                mealsLocalDataSource.favouriteMealsDAO().insert(meal)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+    public Completable insertIntoFavourite(LocalMealDTO meal) {
+        return mealsLocalDataSource.favouriteMealsDAO().insert(meal);
     }
 
-    public Completable updateFavourite(MealDTO meal) {
-        return
-                mealsLocalDataSource.favouriteMealsDAO().update(meal)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+    public Completable updateFavourite(LocalMealDTO meal) {
+        return mealsLocalDataSource.favouriteMealsDAO().update(meal);
     }
 
-    public Completable deleteFavourite(MealDTO meal) {
-        return
-                mealsLocalDataSource.favouriteMealsDAO().delete(meal)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+    public Completable deleteFavourite(LocalMealDTO meal) {
+        return mealsLocalDataSource.favouriteMealsDAO().delete(meal);
     }
 
-    public Flowable<List<MealDTO>> getAllFavourite() {
-        return
-                mealsLocalDataSource.favouriteMealsDAO().getAllMeals()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+    public Flowable<List<LocalMealDTO>> getAllFavourite() {
+        return mealsLocalDataSource.favouriteMealsDAO().getAllMeals();
     }
 
     public Completable deleteAllFavourite() {
-        return
-                mealsLocalDataSource.favouriteMealsDAO().deleteAllMeals()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+        return mealsLocalDataSource.favouriteMealsDAO().deleteAllMeals();
     }
 
     public Completable insertPlanByDay(PlanDTO planDTO) {
-        return
-                mealsLocalDataSource.planDAO().insertPlan(planDTO)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+        return mealsLocalDataSource.planDAO().insertPlan(planDTO);
     }
 
     public Flowable<List<PlanDTO>> getAllPlansByDAy() {
-        return
-                mealsLocalDataSource.planDAO().getAllPlans()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+        return mealsLocalDataSource.planDAO().getAllPlans();
     }
 
     public Completable deletePlan(PlanDTO plan) {
-        return
-                mealsLocalDataSource.planDAO().deletePlan(plan)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+        return mealsLocalDataSource.planDAO().deletePlan(plan);
     }
-
-
 }

@@ -1,10 +1,10 @@
 package com.ahmed.gourmetguide.iti.favourite.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,16 +16,17 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ahmed.gourmetguide.iti.R;
-import com.ahmed.gourmetguide.iti.model.MealDTO;
+import com.ahmed.gourmetguide.iti.model.local.LocalMealDTO;
+import com.ahmed.gourmetguide.iti.model.local.PlanDTO;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.ViewHolder> {
-    List<MealDTO> meals;
+    List<LocalMealDTO> meals;
     Context context;
     OnDeleteFavoriteListener onDeleteFavoriteListener;
-    public FavouriteAdapter (Context context,List<MealDTO> meals,OnDeleteFavoriteListener onDeleteFavoriteListener){
+    public FavouriteAdapter (Context context,List<LocalMealDTO> meals,OnDeleteFavoriteListener onDeleteFavoriteListener){
         this.meals = meals;
         this.context = context;
         this.onDeleteFavoriteListener = onDeleteFavoriteListener;
@@ -43,7 +44,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MealDTO meal =  meals.get(position);
+        LocalMealDTO meal =  meals.get(position);
 
         holder.categoryName.setText(meal.getStrMeal());
 
@@ -55,7 +56,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.View
             Navigation.findNavController(v).navigate(action);
         });
         holder.deleteFav.setOnClickListener(v->{
-            onDeleteFavoriteListener.onClick(meal);
+            showDeleteAlertDialog(meal);
         });
     }
 
@@ -65,7 +66,21 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.View
         return meals.size();
     }
 
-    public void updateData(List<MealDTO> meals){
+    private void showDeleteAlertDialog(LocalMealDTO meal) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Deleting Item")
+                .setMessage("Are you sure? Do you want delete this item?")
+                .setPositiveButton("Delete", (dialog,which)->{
+                    onDeleteFavoriteListener.onClick(meal);
+                })
+                .setNegativeButton("Cancel",( dialog, which)-> {
+                    dialog.dismiss();
+                })
+                .create()
+                .show();
+    }
+
+    public void updateData(List<LocalMealDTO> meals){
         this.meals = meals;
         notifyDataSetChanged();
     }

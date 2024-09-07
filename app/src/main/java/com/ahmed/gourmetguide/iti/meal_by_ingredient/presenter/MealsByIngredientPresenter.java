@@ -3,7 +3,7 @@ package com.ahmed.gourmetguide.iti.meal_by_ingredient.presenter;
 import android.util.Log;
 
 import com.ahmed.gourmetguide.iti.meal_by_ingredient.view.OnMealByIngredientView;
-import com.ahmed.gourmetguide.iti.model.MealByIngredientResponse;
+import com.ahmed.gourmetguide.iti.model.remote.MealByIngredientResponse;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

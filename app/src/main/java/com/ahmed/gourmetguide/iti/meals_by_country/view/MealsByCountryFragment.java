@@ -14,10 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ahmed.gourmetguide.iti.R;
-import com.ahmed.gourmetguide.iti.meal_by_ingredient.view.MealsByIngredientAdapter;
-import com.ahmed.gourmetguide.iti.meal_by_ingredient.view.MealsByIngredientFragmentArgs;
 import com.ahmed.gourmetguide.iti.meals_by_country.presenter.MealsByCountryPresenter;
-import com.ahmed.gourmetguide.iti.model.MealsByCountryDTO;
+import com.ahmed.gourmetguide.iti.model.remote.MealsByCountryDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
 import java.util.List;

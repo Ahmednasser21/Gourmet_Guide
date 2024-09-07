@@ -23,7 +23,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.ahmed.gourmetguide.iti.R;
-import com.ahmed.gourmetguide.iti.home.home_view.HomeActivity;
+import com.ahmed.gourmetguide.iti.home.view.HomeActivity;
 import com.ahmed.gourmetguide.iti.signup.presenter.SignUpPresenter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

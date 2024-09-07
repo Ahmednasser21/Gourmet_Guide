@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.ahmed.gourmetguide.iti.model.MealDTO;
+import com.ahmed.gourmetguide.iti.model.local.LocalMealDTO;
 
 import java.util.List;
 
@@ -17,17 +17,17 @@ import io.reactivex.rxjava3.core.Flowable;
 @Dao
 public interface FavouriteMealsDAO {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    Completable insert(MealDTO meal);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insert(LocalMealDTO meal);
 
     @Update
-    Completable update(MealDTO meal);
+    Completable update(LocalMealDTO meal);
 
     @Delete
-    Completable delete(MealDTO meal);
+    Completable delete(LocalMealDTO meal);
 
     @Query("SELECT * FROM favourite_meals")
-    Flowable<List<MealDTO>> getAllMeals();
+    Flowable<List<LocalMealDTO>> getAllMeals();
 
     @Query("DELETE FROM favourite_meals")
     Completable deleteAllMeals();

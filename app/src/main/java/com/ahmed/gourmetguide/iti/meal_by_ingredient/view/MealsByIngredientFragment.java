@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.meal_by_ingredient.presenter.MealsByIngredientPresenter;
-import com.ahmed.gourmetguide.iti.model.MealByIngredientDTO;
+import com.ahmed.gourmetguide.iti.model.remote.MealByIngredientDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
 import java.util.List;

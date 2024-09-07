@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.ahmed.gourmetguide.iti.model.PlanDTO;
+import com.ahmed.gourmetguide.iti.model.local.PlanDTO;
 
 import java.util.List;
 

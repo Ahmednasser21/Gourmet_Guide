@@ -1,8 +1,8 @@
 package com.ahmed.gourmetguide.iti.favourite.view;
 
-import com.ahmed.gourmetguide.iti.model.MealDTO;
+import com.ahmed.gourmetguide.iti.model.local.LocalMealDTO;
 
 public interface OnDeleteFavoriteListener {
 
-    void onClick(MealDTO meal);
+    void onClick(LocalMealDTO meal);
 }

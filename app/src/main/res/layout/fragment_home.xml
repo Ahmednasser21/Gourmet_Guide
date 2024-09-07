@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.home_view.HomeFragment">
+    tools:context=".home.view.HomeFragment">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image_home"
         android:layout_width="49dp"

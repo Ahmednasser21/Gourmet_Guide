@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.calender.presenter.CalenderPresenter;
-import com.ahmed.gourmetguide.iti.model.PlanDTO;
+import com.ahmed.gourmetguide.iti.model.local.PlanDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import java.util.List;
 public class CalenderFragment extends Fragment implements OnPlanView , OnDeletePlanListener {
     RecyclerView planRec;
     CalenderPresenter calenderPresenter;
-   PlanAdapter planAdapter;
+    PlanAdapter planAdapter;
     private static final String TAG = "CalenderFragment";
 
     @Override

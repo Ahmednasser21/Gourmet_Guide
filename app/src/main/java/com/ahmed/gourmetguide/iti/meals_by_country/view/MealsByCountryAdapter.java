@@ -14,10 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ahmed.gourmetguide.iti.R;
-import com.ahmed.gourmetguide.iti.meal_by_ingredient.view.MealsByIngredientAdapter;
-import com.ahmed.gourmetguide.iti.meal_by_ingredient.view.MealsByIngredientFragmentDirections;
-import com.ahmed.gourmetguide.iti.model.MealByIngredientDTO;
-import com.ahmed.gourmetguide.iti.model.MealsByCountryDTO;
+import com.ahmed.gourmetguide.iti.model.remote.MealsByCountryDTO;
 import com.bumptech.glide.Glide;
 
 import java.util.List;

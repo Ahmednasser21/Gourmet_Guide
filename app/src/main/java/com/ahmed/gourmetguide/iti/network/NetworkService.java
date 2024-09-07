@@ -1,12 +1,12 @@
 package com.ahmed.gourmetguide.iti.network;
 
-import com.ahmed.gourmetguide.iti.model.CategoryMealsResponse;
-import com.ahmed.gourmetguide.iti.model.CategoryResponse;
-import com.ahmed.gourmetguide.iti.model.CountryListResponse;
-import com.ahmed.gourmetguide.iti.model.IngredientListResponse;
-import com.ahmed.gourmetguide.iti.model.MealByIngredientResponse;
-import com.ahmed.gourmetguide.iti.model.MealResponse;
-import com.ahmed.gourmetguide.iti.model.MealsByCountryResponse;
+import com.ahmed.gourmetguide.iti.model.remote.CategoryMealsResponse;
+import com.ahmed.gourmetguide.iti.model.remote.CategoryResponse;
+import com.ahmed.gourmetguide.iti.model.remote.CountryListResponse;
+import com.ahmed.gourmetguide.iti.model.remote.IngredientListResponse;
+import com.ahmed.gourmetguide.iti.model.remote.MealByIngredientResponse;
+import com.ahmed.gourmetguide.iti.model.remote.MealResponse;
+import com.ahmed.gourmetguide.iti.model.remote.MealsByCountryResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;

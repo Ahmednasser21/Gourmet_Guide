@@ -1,6 +1,6 @@
 package com.ahmed.gourmetguide.iti.meals_by_country.view;
 
-import com.ahmed.gourmetguide.iti.model.MealsByCountryDTO;
+import com.ahmed.gourmetguide.iti.model.remote.MealsByCountryDTO;
 
 import java.util.List;
 

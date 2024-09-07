@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.ahmed.gourmetguide.iti.home.home_view.HomeActivity;
+import com.ahmed.gourmetguide.iti.home.view.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
 
 public class OnBoardFragment extends Fragment {

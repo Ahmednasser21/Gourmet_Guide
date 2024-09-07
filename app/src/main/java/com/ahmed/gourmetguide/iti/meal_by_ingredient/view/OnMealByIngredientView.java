@@ -1,6 +1,6 @@
 package com.ahmed.gourmetguide.iti.meal_by_ingredient.view;
 
-import com.ahmed.gourmetguide.iti.model.MealByIngredientDTO;
+import com.ahmed.gourmetguide.iti.model.remote.MealByIngredientDTO;
 
 import java.util.List;
 

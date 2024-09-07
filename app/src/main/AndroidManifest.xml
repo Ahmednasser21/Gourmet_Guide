@@ -20,7 +20,7 @@
         android:theme="@style/Theme.GourmetGuide"
         tools:targetApi="31">
         <activity
-            android:name=".home.home_view.HomeActivity"
+            android:name=".home.view.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.GourmetGuide"
             android:screenOrientation="portrait"/>

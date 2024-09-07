@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.ahmed.gourmetguide.iti.home.home_view.HomeActivity;
+import com.ahmed.gourmetguide.iti.home.view.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
 
 public class SignUpActivity extends AppCompatActivity {
