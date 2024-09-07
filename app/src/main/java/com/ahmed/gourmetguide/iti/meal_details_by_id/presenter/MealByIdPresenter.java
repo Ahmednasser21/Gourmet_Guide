@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.ahmed.gourmetguide.iti.meal_details_by_id.view.OnMealView;
 import com.ahmed.gourmetguide.iti.model.local.LocalMealDTO;
+import com.ahmed.gourmetguide.iti.model.local.PlanDTO;
 import com.ahmed.gourmetguide.iti.model.remote.MealResponse;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
@@ -66,5 +67,26 @@ public class MealByIdPresenter  {
                 Log.i(TAG, "onError: Error"+e.getMessage());
             }
         });
+    }
+    public void insertIntoPlanByDAy(PlanDTO plan){
+        repo.insertPlanByDay(plan)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.i(TAG, "onComplete: insert into plan successful");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: Failure in plan insertion");
+                    }
+                });
     }
 }

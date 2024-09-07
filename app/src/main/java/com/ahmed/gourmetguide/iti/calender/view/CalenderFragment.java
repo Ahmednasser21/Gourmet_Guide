@@ -1,5 +1,6 @@
 package com.ahmed.gourmetguide.iti.calender.view;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.calender.presenter.CalenderPresenter;
@@ -19,12 +23,15 @@ import com.ahmed.gourmetguide.iti.model.local.PlanDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
-public class CalenderFragment extends Fragment implements OnPlanView , OnDeletePlanListener {
+public class CalenderFragment extends Fragment implements OnPlanView , OnDeletePlanListener , OnMealsByDateView {
     RecyclerView planRec;
     CalenderPresenter calenderPresenter;
     PlanAdapter planAdapter;
+    TextView filterByDate;
     private static final String TAG = "CalenderFragment";
 
     @Override
@@ -42,18 +49,38 @@ public class CalenderFragment extends Fragment implements OnPlanView , OnDeleteP
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         planRec = view.findViewById(R.id.rec_planed_list);
-        calenderPresenter = new CalenderPresenter(this, Repository.getInstance(getContext()));
+        filterByDate = view.findViewById(R.id.data_filter_tv);
+        calenderPresenter = new CalenderPresenter(this, this,Repository.getInstance(getContext()));
         calenderPresenter.getAllPlans();
         planAdapter = new PlanAdapter(getContext(),new ArrayList<>(),this);
         planRec.setLayoutManager(new LinearLayoutManager(getContext()));
         planRec.setAdapter(planAdapter);
+        filterByDate.setOnClickListener(v->{
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    getContext(),
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+                            String formattedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year,monthOfYear + 1,dayOfMonth);
+                            filterByDate.setText(formattedDate);
+                            calenderPresenter.getPlannedMealsByDate(dayOfMonth,monthOfYear,year);
+
+                        }
+                    },
+                    year, month, day);
+            datePickerDialog.show();
+        });
     }
 
     @Override
     public void onPlanViewSuccess(List<PlanDTO> meals) {
         planAdapter.updateData(meals);
-        planRec.setLayoutManager(new LinearLayoutManager(getContext()));
-        planRec.setAdapter(planAdapter);
         Log.i(TAG, "onPlanViewSuccess: delivered successfully"+meals.size());
     }
 
@@ -64,9 +91,19 @@ public class CalenderFragment extends Fragment implements OnPlanView , OnDeleteP
 
     @Override
     public void onDeleteListener(PlanDTO plan) {
-
         calenderPresenter.deletePlan(plan);
         calenderPresenter.getAllPlans();
 
+    }
+
+    @Override
+    public void onMealsByDateSuccess(List<PlanDTO> plans) {
+        planAdapter.updateData(plans);
+        Log.i(TAG, "onMealsByDateSuccess: ");
+    }
+
+    @Override
+    public void onMealsByDateFail(String errMsg) {
+        Log.e(TAG, "onMealsByDateFail: "+errMsg);
     }
 }

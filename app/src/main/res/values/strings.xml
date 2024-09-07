@@ -68,4 +68,6 @@
     <string name="enter_new_password">Enter new password</string>
     <string name="textview">TextView</string>
     <string name="confirm">Confirm</string>
+    <string name="filter_by_date">Filter by date</string>
+    <string name="filter">filter</string>
 </resources>

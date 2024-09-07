@@ -48,7 +48,6 @@ public class MealDetailsFragment extends Fragment implements OnMealView {
     WebView webView;
     String videoURL;
     MealDTO tempMeal;
-    CalenderPresenter calenderPresenter;
 
 
     @Override
@@ -77,7 +76,6 @@ public class MealDetailsFragment extends Fragment implements OnMealView {
         addFavourite = view.findViewById(R.id.add_favourite);
         webView = view.findViewById(R.id.webView);
         addToCalender = view.findViewById(R.id.add_to_calender);
-        calenderPresenter = new CalenderPresenter(null, Repository.getInstance(getContext()));
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences(getString(R.string.preference_login_file_key), Context.MODE_PRIVATE);
         boolean isGuest = sharedPreferences.getBoolean(getString(R.string.preferences_is_guest), false);
 
@@ -104,7 +102,7 @@ public class MealDetailsFragment extends Fragment implements OnMealView {
                                                   int monthOfYear, int dayOfMonth) {
                                 PlanDTO plan = new PlanDTO(dayOfMonth, monthOfYear, year);
 
-                                calenderPresenter.insertIntoPlanByDAy(convertMealDtoToPlanDto(plan, tempMeal));
+                                mealByIdPresenter.insertIntoPlanByDAy(convertMealDtoToPlanDto(plan, tempMeal));
                                 Toast.makeText(getContext(), "Successfully added  to planes", Toast.LENGTH_LONG).show();
 
                             }

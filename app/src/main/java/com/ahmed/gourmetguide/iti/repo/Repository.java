@@ -100,4 +100,7 @@ public class Repository {
     public Completable deletePlan(PlanDTO plan) {
         return mealsLocalDataSource.planDAO().deletePlan(plan);
     }
+    public Flowable<List<PlanDTO>>getMealsByDate(int day,int month , int year){
+        return mealsLocalDataSource.planDAO().getPlansByDate(day,month,year);
+    }
 }
