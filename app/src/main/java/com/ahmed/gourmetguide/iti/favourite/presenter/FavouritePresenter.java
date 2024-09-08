@@ -55,6 +55,7 @@ public class FavouritePresenter {
 
     }
     public void deleteFavourite(LocalMealDTO meal){
+        repo.deleteFavFromFireStore(meal.getIdMeal());
         repo.deleteFavourite(meal)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

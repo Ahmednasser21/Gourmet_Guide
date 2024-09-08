@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahmed.gourmetguide.iti.R;
-import com.ahmed.gourmetguide.iti.calender.presenter.CalenderPresenter;
 import com.ahmed.gourmetguide.iti.meal_details_by_id.presenter.MealByIdPresenter;
 import com.ahmed.gourmetguide.iti.model.local.LocalMealDTO;
 import com.ahmed.gourmetguide.iti.model.remote.MealDTO;
@@ -102,7 +101,7 @@ public class MealDetailsFragment extends Fragment implements OnMealView {
                                                   int monthOfYear, int dayOfMonth) {
                                 PlanDTO plan = new PlanDTO(dayOfMonth, monthOfYear, year);
 
-                                mealByIdPresenter.insertIntoPlanByDAy(convertMealDtoToPlanDto(plan, tempMeal));
+                                mealByIdPresenter.insertIntoPlans(convertMealDtoToPlanDto(plan, tempMeal));
                                 Toast.makeText(getContext(), "Successfully added  to planes", Toast.LENGTH_LONG).show();
 
                             }

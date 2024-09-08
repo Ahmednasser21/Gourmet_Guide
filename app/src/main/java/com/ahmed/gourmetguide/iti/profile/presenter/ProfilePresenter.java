@@ -8,10 +8,16 @@ import com.ahmed.gourmetguide.iti.model.local.LocalMealDTO;
 import com.ahmed.gourmetguide.iti.model.local.PlanDTO;
 import com.ahmed.gourmetguide.iti.profile.view.ProfileView;
 import com.ahmed.gourmetguide.iti.repo.Repository;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 
 import org.reactivestreams.Subscription;
 
@@ -28,21 +34,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ProfilePresenter {
     private ProfileView view;
     private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore firestore;
     private Repository repo;
-    private List<LocalMealDTO> favouriteMeals;
-    private List<PlanDTO> plans;
     private static final String TAG = "ProfilePresenter";
 
     public ProfilePresenter(ProfileView view, Repository repo) {
         this.view = view;
         firebaseAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
         this.repo = repo;
-        favouriteMeals = new ArrayList<>();
-        plans = new ArrayList<>();
-        getAllFavouriteMeals();
-        getAllPlans();
     }
 
 
@@ -61,12 +59,12 @@ public class ProfilePresenter {
 
 
     public void signOut() {
-        uploadPlans();
-        uploadFav();
         view.showSignOutAlert();
     }
 
     public void confirmSignOut() {
+        deleteAllPlans();
+        deleteAllFav();
         firebaseAuth.signOut();
         view.onSignOutSuccess();
     }
@@ -103,112 +101,11 @@ public class ProfilePresenter {
         }
     }
 
-    public void getAllFavouriteMeals() {
-        repo.getAllFavourite()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new FlowableSubscriber<List<LocalMealDTO>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Subscription s) {
-                        s.request(Long.MAX_VALUE);
-                    }
-
-                    @Override
-                    public void onNext(List<LocalMealDTO> localMealDTOS) {
-                        Log.i(TAG, "onNext: all favorite meals" + localMealDTOS.size());
-                        favouriteMeals = localMealDTOS;
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.i(TAG, "onError: get all favorite");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.i(TAG, "onComplete: get all favorite");
-                    }
-                });
-    }
-
-    public void getAllPlans() {
-        repo.getAllPlans()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new FlowableSubscriber<List<PlanDTO>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Subscription s) {
-                        s.request(Long.MAX_VALUE);
-                    }
-
-                    @Override
-                    public void onNext(List<PlanDTO> planDTOS) {
-                        Log.i(TAG, "onNext:get plans" + planDTOS.size());
-                        plans = planDTOS;
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.i(TAG, "onError: get plans");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.i(TAG, "onComplete: get plans");
-                    }
-                });
-    }
-
-    public void uploadFav() {
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null && !favouriteMeals.isEmpty()) {
-            String userId = user.getUid();
-            for (LocalMealDTO meal : favouriteMeals) {
-                firestore.collection("users")
-                        .document(userId)
-                        .collection("favouriteMeals")
-                        .add(meal)
-                        .addOnSuccessListener(documentReference ->
-                                Log.i(TAG, "Favourite meal uploaded: " + documentReference.getId())
-                        )
-                        .addOnFailureListener(e ->
-                                Log.e(TAG, "Failed to upload favourite meal", e)
-                        );
-            }
-            deleteAllFav();
-        } else {
-            Log.e(TAG, "No user or no favorite meals to upload.");
-        }
-    }
-
-    public void uploadPlans() {
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null && !plans.isEmpty()) {
-            String userId = user.getUid();
-            for (PlanDTO plan : plans) {
-                firestore.collection("users")
-                        .document(userId)
-                        .collection("mealPlans")
-                        .add(plan)
-                        .addOnSuccessListener(documentReference ->
-                                Log.i(TAG, "Meal plan uploaded: " + documentReference.getId())
-                        )
-                        .addOnFailureListener(e ->
-                                Log.e(TAG, "Failed to upload meal plan", e)
-                        );
-            }
-            deleteAllPlans();
-        } else {
-            Log.e(TAG, "No user or no meal plans to upload.");
-        }
-    }
 
     public void deleteAllPlans() {
         repo.deleteAllPlans()
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -229,8 +126,8 @@ public class ProfilePresenter {
 
     public void deleteAllFav() {
         repo.deleteAllFavourite()
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {

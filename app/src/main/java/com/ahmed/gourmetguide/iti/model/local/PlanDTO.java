@@ -11,6 +11,7 @@ public class PlanDTO {
         this.month = month;
         this.year = year;
     }
+    public PlanDTO(){};
     @PrimaryKey
     @NonNull
     String idMeal;

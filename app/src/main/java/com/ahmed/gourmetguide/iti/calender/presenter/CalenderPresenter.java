@@ -58,6 +58,7 @@ public class CalenderPresenter {
         });
     }
     public void deletePlan(PlanDTO plan ){
+        repo.deletePlanFromFireStore(plan.getIdMeal());
         repo.deletePlan(plan)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

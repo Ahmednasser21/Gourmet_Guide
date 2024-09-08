@@ -47,8 +47,8 @@ public class MealByIdPresenter  {
                 });;
     }
 
-
     public void insertIntoFavourite(LocalMealDTO meal) {
+        repo.uploadFav(meal);
         repo.insertIntoFavourite(meal).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -68,8 +68,9 @@ public class MealByIdPresenter  {
             }
         });
     }
-    public void insertIntoPlanByDAy(PlanDTO plan){
-        repo.insertPlanByDay(plan)
+    public void insertIntoPlans(PlanDTO plan){
+        repo.uploadPlan(plan);
+        repo.insertPlan(plan)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {

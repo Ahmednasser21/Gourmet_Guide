@@ -31,4 +31,7 @@ public interface FavouriteMealsDAO {
 
     @Query("DELETE FROM favourite_meals")
     Completable deleteAllMeals();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertFavList(List<LocalMealDTO> favourites);
 }

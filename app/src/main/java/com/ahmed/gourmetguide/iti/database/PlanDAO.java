@@ -31,6 +31,10 @@ public interface PlanDAO {
 
     @Query("DELETE FROM `Plan`")
     Completable deleteAllPlans();
+
     @Query("SELECT * FROM `Plan` WHERE day = :day AND month = :month AND year = :year")
     Flowable<List<PlanDTO>>getPlansByDate(int day,int month,int year);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertPlanList(List<PlanDTO> plans);
 }
