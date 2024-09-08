@@ -17,12 +17,14 @@ import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.favourite.presenter.FavouritePresenter;
 import com.ahmed.gourmetguide.iti.model.local.LocalMealDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
+import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavouriteFragment extends Fragment implements OnFavouriteView, OnDeleteFavoriteListener {
     RecyclerView favRecycler;
+    LottieAnimationView emptyBox;
     FavouritePresenter favouritePresenter;
     FavouriteAdapter favouriteAdapter;
     private static final String TAG = "FavouriteFragment";
@@ -41,6 +43,8 @@ public class FavouriteFragment extends Fragment implements OnFavouriteView, OnDe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         favRecycler = view.findViewById(R.id.rec_favourite_list);
+        emptyBox = view.findViewById(R.id.empty_box_animation_fav);
+        emptyBox.setVisibility(View.GONE);
         favouritePresenter = new FavouritePresenter(Repository.getInstance(getContext()),this);
         favouritePresenter.getAllFavourite();
         favouriteAdapter = new FavouriteAdapter(getContext(),new ArrayList<>(),this);
@@ -58,9 +62,12 @@ public class FavouriteFragment extends Fragment implements OnFavouriteView, OnDe
     @Override
     public void onFavoriteViewSuccess(List<LocalMealDTO> meals) {
             favouriteAdapter.updateData(meals);
-            favRecycler.setAdapter(favouriteAdapter);
-            favRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        if (meals.isEmpty()){
+            emptyBox.setVisibility(View.VISIBLE);
+        }
+        else {
+            emptyBox.setVisibility(View.GONE);
+        }
     }
 
     @Override

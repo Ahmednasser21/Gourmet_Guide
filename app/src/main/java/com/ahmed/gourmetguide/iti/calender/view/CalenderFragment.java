@@ -21,6 +21,7 @@ import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.calender.presenter.CalenderPresenter;
 import com.ahmed.gourmetguide.iti.model.local.PlanDTO;
 import com.ahmed.gourmetguide.iti.repo.Repository;
+import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +33,7 @@ public class CalenderFragment extends Fragment implements OnPlanView , OnDeleteP
     CalenderPresenter calenderPresenter;
     PlanAdapter planAdapter;
     TextView filterByDate;
+    LottieAnimationView emptyBox;
     private static final String TAG = "CalenderFragment";
 
     @Override
@@ -50,6 +52,8 @@ public class CalenderFragment extends Fragment implements OnPlanView , OnDeleteP
         super.onViewCreated(view, savedInstanceState);
         planRec = view.findViewById(R.id.rec_planed_list);
         filterByDate = view.findViewById(R.id.data_filter_tv);
+        emptyBox = view.findViewById(R.id.empty_box_animation);
+        emptyBox.setVisibility(View.GONE);
         calenderPresenter = new CalenderPresenter(this, this,Repository.getInstance(getContext()));
         calenderPresenter.getAllPlans();
         planAdapter = new PlanAdapter(getContext(),new ArrayList<>(),this);
@@ -76,12 +80,20 @@ public class CalenderFragment extends Fragment implements OnPlanView , OnDeleteP
                     year, month, day);
             datePickerDialog.show();
         });
+
     }
+
 
     @Override
     public void onPlanViewSuccess(List<PlanDTO> meals) {
         planAdapter.updateData(meals);
         Log.i(TAG, "onPlanViewSuccess: delivered successfully"+meals.size());
+        if (meals.isEmpty()){
+            emptyBox.setVisibility(View.VISIBLE);
+        }
+        else {
+            emptyBox.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -100,6 +112,12 @@ public class CalenderFragment extends Fragment implements OnPlanView , OnDeleteP
     public void onMealsByDateSuccess(List<PlanDTO> plans) {
         planAdapter.updateData(plans);
         Log.i(TAG, "onMealsByDateSuccess: ");
+        if (plans.isEmpty()){
+            emptyBox.setVisibility(View.VISIBLE);
+        }
+        else {
+            emptyBox.setVisibility(View.GONE);
+        }
     }
 
     @Override
