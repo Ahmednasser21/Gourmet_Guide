@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.ahmed.gourmetguide.iti.R;
 import com.ahmed.gourmetguide.iti.profile.presenter.ProfilePresenter;
+import com.ahmed.gourmetguide.iti.repo.Repository;
 import com.ahmed.gourmetguide.iti.signup.view.SignUpActivity;
 import com.bumptech.glide.Glide;
 
@@ -40,11 +41,13 @@ public class ProfileFragment extends Fragment implements ProfileView {
     private SharedPreferences.Editor editor;
     private EditText changePassword, confirmPassword;
     boolean isShowed = false;
+    Repository repo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new ProfilePresenter(this);
+        repo = Repository.getInstance(getContext());
+        presenter = new ProfilePresenter(this,repo);
     }
 
     @Override

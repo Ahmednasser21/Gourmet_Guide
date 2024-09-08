@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavAction;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.ahmed.gourmetguide.iti.home.view.HomeActivity;
 import com.ahmed.gourmetguide.iti.R;
@@ -61,8 +64,8 @@ public class LoginFragment extends Fragment implements LoginView {
     @Override
     public void showLoginSuccess() {
         Toast.makeText(getActivity(), "Authentication Successful.", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getActivity(), HomeActivity.class));
-        requireActivity().finish();
+         NavDirections action = LoginFragmentDirections.actionLoginFragmentToOnBoardFragment();
+         Navigation.findNavController(getView()).navigate(action);
     }
 
     @Override

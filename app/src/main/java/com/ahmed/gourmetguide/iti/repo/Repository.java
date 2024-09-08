@@ -8,7 +8,6 @@ import com.ahmed.gourmetguide.iti.model.remote.CountryListResponse;
 import com.ahmed.gourmetguide.iti.model.remote.IngredientListResponse;
 import com.ahmed.gourmetguide.iti.model.local.LocalMealDTO;
 import com.ahmed.gourmetguide.iti.model.remote.MealByIngredientResponse;
-import com.ahmed.gourmetguide.iti.model.remote.MealDTO;
 import com.ahmed.gourmetguide.iti.model.remote.MealResponse;
 import com.ahmed.gourmetguide.iti.model.remote.MealsByCountryResponse;
 import com.ahmed.gourmetguide.iti.model.local.PlanDTO;
@@ -18,7 +17,6 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.core.SingleEmitter;
 
 public class Repository {
 
@@ -95,7 +93,7 @@ public class Repository {
         return mealsLocalDataSource.planDAO().insertPlan(planDTO);
     }
 
-    public Flowable<List<PlanDTO>> getAllPlansByDAy() {
+    public Flowable<List<PlanDTO>> getAllPlans() {
         return mealsLocalDataSource.planDAO().getAllPlans();
     }
 
@@ -107,5 +105,8 @@ public class Repository {
     }
     public Single<MealResponse>searchMealByName(String mealName){
         return mealRemoteDataSource.searchMealByName(mealName);
+    }
+    public Completable deleteAllPlans() {
+        return mealsLocalDataSource.planDAO().deleteAllPlans();
     }
 }

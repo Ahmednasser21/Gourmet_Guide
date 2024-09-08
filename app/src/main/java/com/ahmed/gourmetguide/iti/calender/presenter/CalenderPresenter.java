@@ -15,7 +15,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.FlowableSubscriber;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -31,7 +30,7 @@ public class CalenderPresenter {
         this.repo = repo;
     }
     public void getAllPlans(){
-        repo.getAllPlansByDAy()
+        repo.getAllPlans()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new FlowableSubscriber<List<PlanDTO>>() {

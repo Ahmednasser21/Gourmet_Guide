@@ -11,15 +11,14 @@ public class PlanDTO {
         this.month = month;
         this.year = year;
     }
-    String strMeal;
     @PrimaryKey
     @NonNull
     String idMeal;
+    String strMeal;
+    String strMealThumb;
     int day;
     int month;
     int year;
-    String strMealThumb;
-
 
     public int getYear() {
         return year;

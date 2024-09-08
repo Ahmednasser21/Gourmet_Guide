@@ -34,7 +34,11 @@
         android:id="@+id/loginFragment"
         android:name="com.ahmed.gourmetguide.iti.login.view.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_onBoardFragment"
+            app:destination="@id/onBoardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/onBoardFragment"
         android:name="com.ahmed.gourmetguide.iti.signup.view.OnBoardFragment"
