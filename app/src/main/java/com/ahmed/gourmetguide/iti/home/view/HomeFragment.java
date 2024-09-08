@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -52,9 +53,27 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
     FirebaseUser user;
     View rootView;
     private static final String TAG = "HomeFragment";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
+                alertBuilder.setTitle("Exit Gourmet Guide")
+                        .setMessage("Are you sure you want to leave the kitchen? Your culinary adventure awaits!")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            requireActivity().finish();
+
+                        }).setNegativeButton("No", (dialog, which) -> {
+                                dialog.dismiss();
+                        })
+                        .create()
+                        .show();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -99,7 +118,7 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
             if (!isGuest) {
                 NavDirections action = HomeFragmentDirections.actionHomeFragmentToProfileFragment();
                 Navigation.findNavController(v).navigate(action);
-            }else{
+            } else {
                 showSignInDialog();
             }
         });
@@ -134,19 +153,21 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
     public void onCategoryFailure(String errorMsg) {
         Log.i(TAG, "onCategoryFailure: ");
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        if (!isNetworkAvailable() && rootView!=null) {
+        if (!isNetworkAvailable() && rootView != null) {
             showNoInternetSnackbar(rootView);
         }
     }
 
     private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) ContextCompat.getSystemService(requireContext(),ConnectivityManager.class);
+        ConnectivityManager connectivityManager = (ConnectivityManager) ContextCompat.getSystemService(requireContext(), ConnectivityManager.class);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
     private void showNoInternetSnackbar(View view) {
         Snackbar snackbar = Snackbar.make(view, "No internet connection", Snackbar.LENGTH_SHORT)
                 .setAction("Settings", new View.OnClickListener() {
@@ -158,6 +179,7 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
                 });
         snackbar.show();
     }
+
     private void showSignInDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Sign In Required")
