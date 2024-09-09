@@ -1,5 +1,6 @@
 package com.ahmed.gourmetguide.iti.meal_details_by_id.presenter;
 
+import android.net.ConnectivityManager;
 import android.util.Log;
 
 import com.ahmed.gourmetguide.iti.meal_details_by_id.view.OnMealView;
@@ -15,7 +16,7 @@ import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class MealByIdPresenter  {
+public class MealByIdPresenter {
     Repository repo;
     OnMealView onMealView;
     private static final String TAG = "MealByIdPresenter";
@@ -24,7 +25,8 @@ public class MealByIdPresenter  {
         this.onMealView = onMealView;
         this.repo = repo;
     }
-    public void getMealById(String mealId){
+
+    public void getMealById(String mealId) {
         repo.getMealById(mealId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<MealResponse>() {
@@ -44,32 +46,32 @@ public class MealByIdPresenter  {
                         onMealView.onMealByIdFailure(e.getMessage());
 
                     }
-                });;
+                });
+        ;
     }
 
     public void insertIntoFavourite(LocalMealDTO meal) {
-        repo.uploadFav(meal);
         repo.insertIntoFavourite(meal).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
-            }
+                    }
 
-            @Override
-            public void onComplete() {
-                Log.i(TAG, "onComplete: inserted Successfully");
-            }
+                    @Override
+                    public void onComplete() {
+                        Log.i(TAG, "onComplete: inserted Successfully");
+                    }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Log.i(TAG, "onError: Error"+e.getMessage());
-            }
-        });
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i(TAG, "onError: Error" + e.getMessage());
+                    }
+                });
     }
-    public void insertIntoPlans(PlanDTO plan){
-        repo.uploadPlan(plan);
+
+    public void insertIntoPlans(PlanDTO plan) {
         repo.insertPlan(plan)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -89,5 +91,11 @@ public class MealByIdPresenter  {
                         Log.i(TAG, "onError: Failure in plan insertion");
                     }
                 });
+    }
+    public void uploadPlan(PlanDTO plan){
+        repo.uploadPlan(plan);
+    }
+    public void uploadFav(LocalMealDTO meal){
+        repo.uploadFav(meal);
     }
 }

@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,8 +83,14 @@ public class MealDetailsFragment extends Fragment implements OnMealView {
 
         addFavourite.setOnClickListener(v -> {
             if (!isGuest) {
-                mealByIdPresenter.insertIntoFavourite(convertMealDTOTOLocalMealDTO(tempMeal));
-                Toast.makeText(getContext(), "Successfully added to favourite ", Toast.LENGTH_LONG).show();
+                LocalMealDTO meal = convertMealDTOTOLocalMealDTO(tempMeal);
+                mealByIdPresenter.insertIntoFavourite(meal);
+                if (isOnline()) {
+                    mealByIdPresenter.uploadFav(meal);
+                    Toast.makeText(getContext(), "Successfully added to favourite ", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getContext(), "Successfully added to favourite locally", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 showSignInDialog();
             }
@@ -100,9 +109,15 @@ public class MealDetailsFragment extends Fragment implements OnMealView {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 PlanDTO plan = new PlanDTO(dayOfMonth, monthOfYear, year);
+                                plan = convertMealDtoToPlanDto(plan, tempMeal);
+                                mealByIdPresenter.insertIntoPlans(plan);
+                                if (isOnline()) {
+                                    mealByIdPresenter.uploadPlan(plan);
+                                    Toast.makeText(getContext(), "Successfully added  to planes", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getContext(), "Successfully added  to planes locally", Toast.LENGTH_SHORT).show();
+                                }
 
-                                mealByIdPresenter.insertIntoPlans(convertMealDtoToPlanDto(plan, tempMeal));
-                                Toast.makeText(getContext(), "Successfully added  to planes", Toast.LENGTH_LONG).show();
 
                             }
                         },
@@ -154,7 +169,8 @@ public class MealDetailsFragment extends Fragment implements OnMealView {
         planDto.setStrMeal(mealDto.getStrMeal());
         return planDto;
     }
-    public LocalMealDTO convertMealDTOTOLocalMealDTO(MealDTO meal){
+
+    public LocalMealDTO convertMealDTOTOLocalMealDTO(MealDTO meal) {
         LocalMealDTO localMeal = new LocalMealDTO();
         localMeal.setIdMeal(meal.getIdMeal());
         localMeal.setStrMeal(meal.getStrMeal());
@@ -181,5 +197,11 @@ public class MealDetailsFragment extends Fragment implements OnMealView {
                 })
                 .create()
                 .show();
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager connectivityManager = ContextCompat.getSystemService(requireContext(), ConnectivityManager.class);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

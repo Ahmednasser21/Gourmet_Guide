@@ -51,7 +51,6 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
     CardView randomMealCard;
     MealDTO randomMeal;
     FirebaseUser user;
-    View rootView;
     private static final String TAG = "HomeFragment";
 
     @Override
@@ -85,7 +84,6 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rootView = view;
         randomMealImg = view.findViewById(R.id.img_card_image);
         randomMealName = view.findViewById(R.id.tv_card_daily);
         homePresenter = new HomePresenter(Repository.getInstance(getContext()), this, this);
@@ -152,32 +150,6 @@ public class HomeFragment extends Fragment implements OnRandomMealView, OnCatego
     @Override
     public void onCategoryFailure(String errorMsg) {
         Log.i(TAG, "onCategoryFailure: ");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!isNetworkAvailable() && rootView != null) {
-            showNoInternetSnackbar(rootView);
-        }
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) ContextCompat.getSystemService(requireContext(), ConnectivityManager.class);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    private void showNoInternetSnackbar(View view) {
-        Snackbar snackbar = Snackbar.make(view, "No internet connection", Snackbar.LENGTH_SHORT)
-                .setAction("Settings", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
-                        startActivity(intent);
-                    }
-                });
-        snackbar.show();
     }
 
     private void showSignInDialog() {
