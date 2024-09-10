@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpWithEmail"
-        android:name="com.ahmed.gourmetguide.iti.email_signup.view.SignUpWithEmailFragment"
+        android:name="com.ahmed.gourmetguide.iti.emailSignup.view.SignUpWithEmailFragment"
         android:label="E-Mail SignUp"
         tools:layout="@layout/fragment_sign_up_with_email" >
         <action

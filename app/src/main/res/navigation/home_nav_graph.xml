@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetails"
-        android:name="com.ahmed.gourmetguide.iti.meal_details_by_id.view.MealDetailsFragment"
+        android:name="com.ahmed.gourmetguide.iti.mealById.view.MealDetailsFragment"
         android:label="Meal Details"
         tools:layout="@layout/fragment_meal_details">
         <argument
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoryMeals"
-        android:name="com.ahmed.gourmetguide.iti.category_meals.view.CategoryMealsFragment"
+        android:name="com.ahmed.gourmetguide.iti.categoryMeals.view.CategoryMealsFragment"
         android:label="Category Meals"
         tools:layout="@layout/fragment_category_meals">
         <action
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealsByIngredientFragment"
-        android:name="com.ahmed.gourmetguide.iti.meal_by_ingredient.view.MealsByIngredientFragment"
+        android:name="com.ahmed.gourmetguide.iti.mealByIngredient.view.MealsByIngredientFragment"
         android:label="fragment_meals_by_ingredient"
         tools:layout="@layout/fragment_meals_by_ingredient" >
         <argument
@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealsByCountryFragment"
-        android:name="com.ahmed.gourmetguide.iti.meals_by_country.view.MealsByCountryFragment"
+        android:name="com.ahmed.gourmetguide.iti.mealsByCountry.view.MealsByCountryFragment"
         android:label="fragment_meals_by_country"
         tools:layout="@layout/fragment_meals_by_country" >
         <action

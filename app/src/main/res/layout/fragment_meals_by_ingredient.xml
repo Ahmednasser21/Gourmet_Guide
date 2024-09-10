@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".meal_by_ingredient.view.MealsByIngredientFragment">
+    tools:context=".mealByIngredient.view.MealsByIngredientFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rec_meals_by_ingredient"

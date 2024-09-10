@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
         boolean isOnline = networkInfo != null && networkInfo.isConnected();
         if (!isOnline) {
             showNoInternetSnackbar();
+            first=!first;
         }
         connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
             @Override

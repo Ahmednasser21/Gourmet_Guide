@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:contentDescription="@string/meal_ingredients"
-    tools:context=".meal_details_by_id.view.MealDetailsFragment"
+    tools:context=".mealById.view.MealDetailsFragment"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout

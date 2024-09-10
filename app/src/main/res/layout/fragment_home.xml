@@ -50,6 +50,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/daily_inspiration"
+        android:textAlignment="center"
         android:textColor="@color/primary_color"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -62,7 +63,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
@@ -95,7 +96,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/textView14"
@@ -105,6 +106,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/categories"
+        android:textAlignment="center"
         android:textColor="@color/primary_color"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -116,8 +118,6 @@
         android:id="@+id/categories_rec"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
