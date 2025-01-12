@@ -15,7 +15,6 @@ Gourmet Guide is an android App offering a diverse collection of food recipes fr
 - MVP Architecture Pattern
 - Room Database
 - Retrofit
-- Firebase authintication
 - RX Java
 - Firebase Authentication
 - Firebase Firestore
